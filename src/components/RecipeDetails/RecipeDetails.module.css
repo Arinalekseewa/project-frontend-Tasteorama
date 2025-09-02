@@ -58,7 +58,7 @@
   margin-bottom: 16px;
 }
 
-.saveBtn {
+/* .saveBtn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -98,7 +98,7 @@
   font-size: 24px;
   color: #fff;
   transition: color 0.2s ease;
-}
+} */
 
 .infocomtainer {
   margin: 0;

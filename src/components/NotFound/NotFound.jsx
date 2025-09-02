@@ -1,8 +1,7 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from './NotFound.module.css';
-import notFoundImg from '../../assets/img/default-recipe.webp';
-import iconSprite from '../../../public/sprite.svg';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./NotFound.module.css";
+import notFoundImg from "../../assets/images/notFoundImg.jpg";
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -13,7 +12,6 @@ const NotFound = () => {
 
   return (
     <div className={styles.container}>
-      <img src={notFoundImg} alt="Not found" className={styles.image} />
       <img src={notFoundImg} alt="Not found" className={styles.image} />
       <h1 className={styles.title}>404</h1>
       <p className={styles.text}>Recipe not found</p>

@@ -1,31 +1,14 @@
-import { useDispatch, useSelector } from "react-redux";
-import { saveRecipe, unsaveRecipe } from "../../redux/recipes";
+import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import styles from "./RecipeDetails.module.css";
 import IngredientsList from "./IngredientsList";
 import StepsList from "./StepsList";
-import { openModal } from "../../redux/modal/slice";
-import { FaRegBookmark, FaBookmark } from "react-icons/fa";
+import FavoriteButton from "../RecipeCard/FavoriteButton/FavoriteButton.jsx";
 
 export default function RecipeDetails({ recipe }) {
-  const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const saved = useSelector((state) => state.recipes.saved);
 
   if (!recipe) return null;
-
-  const handleSaveClick = () => {
-    if (!isLoggedIn) {
-      dispatch(openModal({ type: "login" }));
-      return;
-    }
-
-    if (saved) {
-      dispatch(unsaveRecipe(recipe._id));
-    } else {
-      dispatch(saveRecipe(recipe._id));
-    }
-  };
 
   return (
     <div className={styles.wrapper}>
@@ -53,19 +36,8 @@ export default function RecipeDetails({ recipe }) {
               <b>Calories:</b> {recipe.calories}
             </p>
           </section>
-
           {/* Save / Unsave */}
-          <button onClick={handleSaveClick} className={styles.saveBtn}>
-            {saved ? (
-              <>
-                <FaBookmark className={styles.icon} /> Unsave
-              </>
-            ) : (
-              <>
-                <FaRegBookmark className={styles.icon} /> Save
-              </>
-            )}
-          </button>
+          <FavoriteButton recipeId={recipe._id} /> {/* інтегрована кнопка */}
         </div>
 
         {/* Опис */}

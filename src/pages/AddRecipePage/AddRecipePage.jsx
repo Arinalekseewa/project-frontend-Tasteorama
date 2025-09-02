@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./AddRecipePage.module.css";
-import { createRecipe } from '../../api/axiosInstance';
-import { fetchOwnRecipes } from '../../redux/recipes/operations.js';
-import {selectCategories, selectIngredients} from '../../redux/filters/selectors.js';
+import { createRecipe } from "../../api/api";
+import { fetchOwnRecipes } from "../../redux/recipes/operations.js";
+import {
+  selectCategories,
+  selectIngredients,
+} from "../../redux/filters/selectors.js";
 
 const AddRecipePage = () => {
   const navigate = useNavigate();
@@ -75,11 +78,11 @@ const AddRecipePage = () => {
     e.preventDefault();
     console.log("Form submitted:", formData);
     // Здесь будет логика отправки данных на сервер
-    
+
     // После успешной отправки перенаправляем на главную страницу
     // или на страницу с рецептами
     navigate("/");
-    
+
     // Альтернативно можно перенаправить на страницу с рецептами:
     // navigate("/recipes");
   };
@@ -273,9 +276,9 @@ const AddRecipePage = () => {
                 <button type="submit" className={styles.submitBtn}>
                   Publish Recipe
                 </button>
-                <button 
-                  type="button" 
-                  onClick={() => navigate(-1)} 
+                <button
+                  type="button"
+                  onClick={() => navigate(-1)}
                   className={styles.cancelBtn}
                 >
                   Cancel

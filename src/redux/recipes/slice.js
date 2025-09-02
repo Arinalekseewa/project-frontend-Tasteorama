@@ -3,8 +3,9 @@ import {
   fetchRecipes,
   fetchRecipeById,
   createRecipe,
-  updateFavorite,
   fetchFavoriteRecipes,
+  addFavorite,
+  removeFavorite,
 } from "./operations";
 import { notifyError, notifySuccess } from "../utils/notifications";
 
@@ -63,12 +64,15 @@ const recipesSlice = createSlice({
       })
       .addCase(fetchRecipeById.fulfilled, (state, action) => {
         state.loading = false;
-        state.currentRecipe = action.payload;
+        state.currentRecipe = action.payload.data;
       })
       .addCase(fetchRecipeById.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
-        notifyError(action.payload);
+        state.error =
+          typeof action.payload === "string"
+            ? action.payload
+            : action.payload?.message || "Recipe not found";
+        notifyError(state.error);
       })
 
       // =======================
@@ -90,40 +94,58 @@ const recipesSlice = createSlice({
       })
 
       // =======================
-      // UPDATE FAVORITE STATUS
+      // ADD TO FAVORITES
       // =======================
-      .addCase(updateFavorite.pending, (state) => {
+      .addCase(addFavorite.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(updateFavorite.fulfilled, (state, action) => {
+      .addCase(addFavorite.fulfilled, (state, action) => {
         state.loading = false;
-        const updatedRecipe = action.payload;
+        const addedRecipe = action.payload.data;
 
-        // Оновлюємо рецепт у списку
-        const index = state.items.findIndex((r) => r._id === updatedRecipe._id);
-        if (index !== -1) {
-          state.items[index] = updatedRecipe;
+        // Додаємо рецепт до favoriteItems
+        if (!state.favoriteItems.some((r) => r._id === addedRecipe._id)) {
+          state.favoriteItems.push(addedRecipe);
         }
 
-        // Оновлюємо поточний рецепт, якщо він відкритий
-        if (state.currentRecipe?._id === updatedRecipe._id) {
-          state.currentRecipe = updatedRecipe;
+        // Якщо цей рецепт відкритий → позначаємо як обраний
+        if (state.currentRecipe?._id === addedRecipe._id) {
+          state.currentRecipe.isFavorite = true;
         }
 
-        // Оновлюємо список улюблених рецептів
-        const favIndex = state.favoriteItems.findIndex(
-          (r) => r._id === updatedRecipe._id
-        );
-        if (updatedRecipe.isFavorite) {
-          if (favIndex === -1) state.favoriteItems.push(updatedRecipe);
-        } else {
-          if (favIndex !== -1) state.favoriteItems.splice(favIndex, 1);
-        }
-
-        notifySuccess("Статус обраного оновлено!");
+        notifySuccess("Рецепт додано до обраного!");
       })
-      .addCase(updateFavorite.rejected, (state, action) => {
+      .addCase(addFavorite.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        notifyError(action.payload);
+      })
+
+      // =======================
+      // REMOVE FROM FAVORITES
+      // =======================
+      .addCase(removeFavorite.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(removeFavorite.fulfilled, (state, action) => {
+        state.loading = false;
+        const recipeId = action.meta.arg;
+
+        // Видаляємо з favoriteItems
+        state.favoriteItems = state.favoriteItems.filter(
+          (r) => r._id !== recipeId
+        );
+
+        // Якщо цей рецепт відкритий → знімаємо позначку
+        if (state.currentRecipe?._id === recipeId) {
+          state.currentRecipe.isFavorite = false;
+        }
+
+        notifySuccess("Рецепт видалено з обраного!");
+      })
+      .addCase(removeFavorite.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
         notifyError(action.payload);

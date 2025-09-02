@@ -68,7 +68,7 @@
 @media (min-width: 768px) {
   .container {
     max-width: 768px;
-    /* height: 656px; */
+    min-height: 656px;
     padding: 133.5px 84px;
   }
 
@@ -85,11 +85,16 @@
 @media (min-width: 1200px) {
   .container {
     max-width: 1225px;
-    /* height: 656px;  */
+    min-height: 656px;
     padding: 38px 312.5px;
   }
 
+  .image {
+    width: 600px;
+    height: 438px;
+  }
+
   .button {
-    width: 288px;
+    margin-bottom: 38px;
   }
 }
