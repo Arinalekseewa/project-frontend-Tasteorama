@@ -23,3 +23,11 @@ export const selectFavoriteRecipes = (state) => state.recipes.favoriteItems;
 export const selectFavoriteRecipesLoading = (state) => state.recipes.loading;
 
 export const selectFavoriteRecipesError = (state) => state.recipes.error;
+
+export const selectHasNextPage = (state) => state.recipes.own.hasNextPage;
+
+export const selectOwnRecipes = (state) => state.recipes.own.items;
+
+export const selectOwnTotal = (state) => state.recipes.own.total;
+
+export const selectFavoriteTotal = (state) => state.recipes.favorite.total;
