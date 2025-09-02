@@ -5,13 +5,15 @@ import {
   createRecipe,
   updateFavorite,
   fetchFavoriteRecipes,
-} from "./operations";
+  fetchAddRecipesToFavorite,
+  fetchDeleteRecipesFromFavorite,
+} from "./operations.js";
 import { notifyError, notifySuccess } from "../utils/notifications";
 
 const initialState = {
   items: [],
   currentRecipe: null,
-  favoriteItems: [],
+  favoriteItems: [], // для обраних рецептів
   loading: false,
   error: null,
   page: 1,
@@ -99,7 +101,7 @@ const recipesSlice = createSlice({
       .addCase(updateFavorite.fulfilled, (state, action) => {
         state.loading = false;
         const updatedRecipe = action.payload;
-
+        
         // Оновлюємо рецепт у списку
         const index = state.items.findIndex((r) => r._id === updatedRecipe._id);
         if (index !== -1) {
@@ -138,10 +140,72 @@ const recipesSlice = createSlice({
       })
       .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
         state.loading = false;
-        state.favoriteItems = action.payload;
+        const favoriteRecipes = action.payload.recipes || action.payload.data || action.payload;
+        state.favoriteItems = Array.isArray(favoriteRecipes) ? favoriteRecipes : [];
       })
       .addCase(fetchFavoriteRecipes.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.payload;
+        notifyError(action.payload);
+      })
+      
+      .addCase(fetchAddRecipesToFavorite.pending, (state) => {
+       
+        state.error = null;
+      })
+      .addCase(fetchAddRecipesToFavorite.fulfilled, (state, action) => {
+        console.log('Add to favorites payload:', action.payload);
+        
+        const recipeId = action.meta.arg; 
+        
+        const recipe = state.items.find(r => r._id === recipeId);
+        
+        if (recipe) {
+          const favIndex = state.favoriteItems.findIndex(r => r._id === recipeId);
+          if (favIndex === -1) {
+            state.favoriteItems.push({ ...recipe, isFavorite: true });
+          }
+        
+          const index = state.items.findIndex(r => r._id === recipeId);
+          if (index !== -1) {
+            state.items[index] = { ...state.items[index], isFavorite: true };
+          }
+          
+          if (state.currentRecipe?._id === recipeId) {
+            state.currentRecipe = { ...state.currentRecipe, isFavorite: true };
+          }
+        }
+        
+        notifySuccess("Рецепт додано до улюблених!");
+      })
+      .addCase(fetchAddRecipesToFavorite.rejected, (state, action) => {
+        state.error = action.payload;
+        notifyError(action.payload);
+      })
+      .addCase(fetchDeleteRecipesFromFavorite.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(fetchDeleteRecipesFromFavorite.fulfilled, (state, action) => {
+        console.log('Remove from favorites payload:', action.payload);
+        
+        const recipeId = action.meta.arg; 
+        
+        state.favoriteItems = state.favoriteItems.filter(
+          (r) => r._id !== recipeId
+        );
+        
+        const index = state.items.findIndex((r) => r._id === recipeId);
+        if (index !== -1) {
+          state.items[index] = { ...state.items[index], isFavorite: false };
+        }
+        
+        if (state.currentRecipe?._id === recipeId) {
+          state.currentRecipe = { ...state.currentRecipe, isFavorite: false };
+        }
+        
+        notifySuccess("Рецепт видалено з улюблених!");
+      })
+      .addCase(fetchDeleteRecipesFromFavorite.rejected, (state, action) => {
         state.error = action.payload;
         notifyError(action.payload);
       });
@@ -150,3 +214,4 @@ const recipesSlice = createSlice({
 
 export const { clearCurrentRecipe, clearError } = recipesSlice.actions;
 export default recipesSlice.reducer;
+

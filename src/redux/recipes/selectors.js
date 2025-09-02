@@ -23,3 +23,16 @@ export const selectFavoriteRecipes = (state) => state.recipes.favoriteItems;
 export const selectFavoriteRecipesLoading = (state) => state.recipes.loading;
 
 export const selectFavoriteRecipesError = (state) => state.recipes.error;
+
+export const selectIsRecipeFavorite = (recipeId) => (state) => {
+  const favoriteRecipes = state.recipes.favoriteItems;
+  const currentRecipes = state.recipes.items;
+  
+  const isInFavorites = Array.isArray(favoriteRecipes) && 
+    favoriteRecipes.some(recipe => recipe._id === recipeId);
+  
+  const recipeInItems = currentRecipes.find(recipe => recipe._id === recipeId);
+  const hasIsFavoriteProperty = recipeInItems?.isFavorite === true;
+  
+  return isInFavorites || hasIsFavoriteProperty;
+};

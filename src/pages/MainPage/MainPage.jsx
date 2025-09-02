@@ -9,7 +9,7 @@ import Pagination from "../../components/Pagination/Pagination.jsx";
 import { toast } from "react-toastify";
 import styles from "./MainPage.module.css";
 
-import { fetchRecipes } from "../../redux/recipes/operations.js";
+import { fetchRecipes, fetchFavoriteRecipes } from "../../redux/recipes/operations.js";
 import {
   selectRecipes,
   selectRecipesError,
@@ -17,6 +17,7 @@ import {
   selectRecipesTotalPages,
 } from "../../redux/recipes/selectors.js";
 import { selectFiltersError } from "../../redux/filters/selectors.js";
+import { selectIsLoggedIn } from "../../redux/auth/selectors.js";
 import { useSearchParams } from "react-router-dom";
 import { fetchCategories, fetchIngredients } from "../../redux/filters/operations.js";
 
@@ -30,13 +31,10 @@ export default function MainPage() {
   const recipesLoading = useSelector(selectRecipesLoading);
   const recipesError = useSelector(selectRecipesError);
   const filtersError = useSelector(selectFiltersError);
-
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const [search, setSearch] = useSearchParams();
   console.log(search.get('ingredient'));
-  
-
-
 
   const sectionRef = useRef(null);
   const isFirstRender = useRef(true);
@@ -57,7 +55,6 @@ export default function MainPage() {
     setPage(1);
   };
 
-  // console.log(recipes.items);
   const handleResetAndCloseFilters = () => {
     setCurrentFilters({ category: "", ingredient: "" });
     setSearchQuery("");
@@ -88,7 +85,14 @@ export default function MainPage() {
     page,
   ]);
 
-  // Виклик fetch на зміну фільтрів, сторінки або пошуку
+  // Завантаження улюблених рецептів, коли користувач увійшов у систему
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(fetchFavoriteRecipes({ page: 1, limit: 1000 })); 
+    }
+  }, [dispatch, isLoggedIn]);
+
+  // Viклик fetch на зміну фільтрів, сторінки або пошуку
   useEffect(() => {
     loadRecipes();
   }, [loadRecipes]);
@@ -141,7 +145,7 @@ export default function MainPage() {
           {searchQuery ? (
             <h1
               className={styles.pageTitle}
-            >{`Search Results for “${searchQuery}”`}</h1>
+            >{`Search Results for "${searchQuery}"`}</h1>
           ) : (
             <h1 className={styles.pageTitle}>Recipes</h1>
           )}
@@ -176,14 +180,8 @@ export default function MainPage() {
 
           {recipesLoading && <Loader />}
 
-
-          {/* {!recipesLoading && !recipesError && recipes.length > 0 && (
-
-            <RecipeList recipes={recipes.recipes} />
-          )} */}
-
-          
           <RecipeList recipes={recipes} />
+          
           {recipes.length > 0 && !recipesLoading && (
             <Pagination
               currentPage={page}

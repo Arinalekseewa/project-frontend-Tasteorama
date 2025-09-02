@@ -1,46 +1,36 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import css from "./FavoriteButton.module.css"
-//import { fetchAddRecipesToFavorite, fetchDeleteRecipesFromFavorite } from '../../../redux/recipes/operations.js';
+import { fetchAddRecipesToFavorite, fetchDeleteRecipesFromFavorite } from '../../../redux/recipes/operations.js';
 import { selectIsLoggedIn } from '../../../redux/auth/selectors.js';
 import { openModal } from '../../../redux/modal/slice.js';
+import { selectIsRecipeFavorite } from '../../../redux/recipes/selectors.js';
 
 const FavoriteButton = ({ recipeId }) => {
-  
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    const isLoggedIn = useSelector(selectIsLoggedIn);
-
     
-    //const favoriteRecipes = useSelector(state => state.recipes.favoriteRecipes);
-  
-    const isFavorite = false; //favoriteRecipes.some(recipe => recipe._id === recipeId);
-
-   
+    const dispatch = useDispatch();
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+    
+    const isFavorite = useSelector(selectIsRecipeFavorite(recipeId));
 
     const handleAddToFavorites = () => {
-        //dispatch(fetchAddRecipesToFavorite(recipeId));
+        dispatch(fetchAddRecipesToFavorite(recipeId));
     };
 
     const handleRemoveFromFavorites = () => {
-        //dispatch(fetchDeleteRecipesFromFavorite(recipeId));
+        dispatch(fetchDeleteRecipesFromFavorite(recipeId));
     };
 
-
-    const handleClick =  () => {
+    const handleClick = () => {
         if (!isLoggedIn) {
             dispatch(openModal({ type: 'login' }));
             return;
         }
 
         if (isFavorite) {
-             handleRemoveFromFavorites();
+            handleRemoveFromFavorites();
         } else {
-             handleAddToFavorites();
-             navigate(`/recipe/${recipeId}`);
+            handleAddToFavorites();
         }
-    
     };
 
     return (
