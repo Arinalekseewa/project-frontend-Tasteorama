@@ -1,6 +1,6 @@
-import {  lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
-import {  useSelector } from "react-redux";
+import { lazy, Suspense } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Layout from "../Layout/Layout";
 import PublicRoute from "../PublicRoute";
 import PrivateRoute from "../PrivateRoute";
@@ -15,6 +15,10 @@ const AddRecipePage = lazy(() =>
   import("../../pages/AddRecipePage/AddRecipePage")
 );
 const ProfilePage = lazy(() => import("../../pages/ProfilePage/ProfilePage"));
+const OwnRecipes = lazy(() => import("../OwnRecipes/OwnRecipes.jsx"));
+const FavoriteRecipes = lazy(() =>
+  import("../FavoriteRecipes/FavoriteRecipes.jsx")
+);
 const AuthPage = lazy(() => import("../../pages/AuthPage/AuthPage"));
 const RegisterPage = lazy(() => import("../../pages/AuthPage/RegisterPage"));
 const NotFound = lazy(() => import("../../components/NotFound/NotFound"));
@@ -39,7 +43,6 @@ function App() {
       <Routes>
         {/* Layout */}
         <Route path="/" element={<Layout />}>
-          
           {/* Public routes */}
           <Route
             path="/"
@@ -113,6 +116,19 @@ function App() {
 
           {/* Not found */}
           <Route path="*" element={<NotFound />} />
+        </Route>
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute
+              component={<ProfilePage />}
+              redirectTo="/auth/login"
+            />
+          }
+        >
+          <Route index element={<Navigate to="own" replace />} />
+          <Route path="own" element={<OwnRecipes />} />
+          <Route path="favorite" element={<FavoriteRecipes />} />
         </Route>
       </Routes>
     </Suspense>
