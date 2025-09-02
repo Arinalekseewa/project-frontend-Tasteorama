@@ -25,7 +25,9 @@
 //   );
 // }
 
+
 import ProfileNavigation from "../../components/ProfileNavigation/ProfileNavigation.jsx";
+import RecipeList from "../../components/RecipeList/RecipeList";
 import s from "./ProfilePage.module.css";
 import { Outlet } from "react-router-dom";
 

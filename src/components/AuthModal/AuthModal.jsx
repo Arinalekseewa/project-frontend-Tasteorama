@@ -19,6 +19,15 @@ export default function AuthModal() {
     return () => window.removeEventListener('keydown', onKey);
   }, [isModalOpen, dispatch]);
 
+  useEffect(() => {
+    if (!isModalOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isModalOpen]);
+
   if (!isModalOpen) return null;
 
   const handleLogIn = () => {
@@ -40,7 +49,7 @@ export default function AuthModal() {
           onClick={onClose}
         >
           <svg className={styles.modalIcon} width={24} height={24}>
-            <use href={`${iconSprite}#exit_logo`}></use>
+            <use href={`${iconSprite}#close_icon`}></use>
           </svg>
         </button>
         <h2 className={styles.modalTitle}>Interaction Error </h2>

@@ -136,7 +136,6 @@ export default function MainPage() {
   return (
     <section className={styles.section}>
       <div className={styles.mainPageContainer}>
-        <button onClick={()=>{setSearch({ingredient: 'newValue'})}}>Click</button>
         <Hero onSearch={handleSearch} searchQuery={searchQuery} />
         <div ref={sectionRef}>
           {searchQuery ? (
