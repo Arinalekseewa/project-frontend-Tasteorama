@@ -44,7 +44,7 @@ export default function Footer() {
             {!isAuthPage && (
               <Link
                 className={styles.links}
-                to="/users/me"
+                to="/profile/own"
                 onClick={handleClick}
               >
                 Account

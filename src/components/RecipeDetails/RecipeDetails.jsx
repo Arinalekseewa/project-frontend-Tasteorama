@@ -1,14 +1,15 @@
-import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../../redux/auth/selectors";
+// import { useSelector } from "react-redux";
+// import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import styles from "./RecipeDetails.module.css";
 import IngredientsList from "./IngredientsList";
 import StepsList from "./StepsList";
 import FavoriteButton from "../RecipeCard/FavoriteButton/FavoriteButton.jsx";
 
 export default function RecipeDetails({ recipe }) {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  // const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  if (!recipe) return null;
+  // if (!recipe) return null;
+  const ingredients = [];
 
   return (
     <div className={styles.wrapper}>
@@ -18,7 +19,7 @@ export default function RecipeDetails({ recipe }) {
 
         {/* Зображення страви */}
         <div className={styles.imageWrapper}>
-          <img src={recipe.image} alt={recipe.title} className={styles.image} />
+          <img src={recipe.thumb} alt={recipe.title} className={styles.image} />
         </div>
       </div>
       <div className={styles.desctopinfo}>
@@ -30,7 +31,7 @@ export default function RecipeDetails({ recipe }) {
               <b>Category:</b> {recipe.category}
             </p>
             <p>
-              <b>Cooking time:</b> {recipe.cookingTime}
+              <b>Cooking time:</b> {recipe.time}
             </p>
             <p>
               <b>Calories:</b> {recipe.calories}
@@ -56,7 +57,7 @@ export default function RecipeDetails({ recipe }) {
           {/* Кроки приготування */}
           <section>
             <h2 className={styles.subtitle}>Preparation Steps</h2>
-            <StepsList steps={recipe.steps} />
+            <StepsList steps={recipe.instructions} />
           </section>
         </div>
       </div>

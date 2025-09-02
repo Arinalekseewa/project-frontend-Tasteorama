@@ -16,7 +16,8 @@ const initialState = {
   loading: false,
   error: null,
   page: 1,
-  perPage: 10,
+  limit: 12,
+  total: 0,
 };
 
 const recipesSlice = createSlice({
@@ -44,6 +45,9 @@ const recipesSlice = createSlice({
         state.loading = false;
         state.items = action.payload.data || action.payload;
 
+        if (action.payload.total) {
+    state.total = action.payload.total;
+  }
         if (action.payload.page) {
           state.page = action.payload.page;
           state.perPage = action.payload.perPage;

@@ -1,11 +1,15 @@
-import {  lazy, Suspense } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import {  useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Layout from "../Layout/Layout";
 import PublicRoute from "../PublicRoute";
 import PrivateRoute from "../PrivateRoute";
 import { selectIsRefreshing } from "../../redux/auth/selectors.js";
-// import { refreshUser } from "../../redux/auth/operations.js";
+import { autoLogin } from '../../redux/auth/operations';
+import {
+  fetchCategories,
+  fetchIngredients,
+} from '../../redux/filters/operations.js';
 
 const MainPage = lazy(() => import("../../pages/MainPage/MainPage"));
 const RecipeViewPage = lazy(() =>
@@ -20,15 +24,15 @@ const RegisterPage = lazy(() => import("../../pages/AuthPage/RegisterPage"));
 const NotFound = lazy(() => import("../../components/NotFound/NotFound"));
 
 function App() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token"); // перевіряємо, чи є токен
-  //   if (token) {
-  //     dispatch(refreshUser());
-  //   }
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(autoLogin());
+    dispatch(fetchCategories());
+    dispatch(fetchIngredients());
+  }, [dispatch]);
+
 
   if (isRefreshing) {
     return <p>Loading...</p>;
@@ -50,14 +54,6 @@ function App() {
               </PublicRoute>
             }
           />
-          {/* <Route
-            path="/recipes"
-            element={
-              <PublicRoute restricted={false}>
-                <RecipeViewPage />
-              </PublicRoute>
-            }
-          /> */}
           <Route
             path="/recipes/:recipeId"
             element={
@@ -93,7 +89,7 @@ function App() {
             }
           />
           <Route
-            path="/users/me"
+            path="/recipes/own"
             element={
               <PrivateRoute
                 component={<ProfilePage />}

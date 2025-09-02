@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./NotFound.module.css";
 import notFoundImg from "../../assets/images/notFoundImg.jpg";
+import iconSprite from '../../../public/sprite.svg';
 
 const NotFound = () => {
   const navigate = useNavigate();
