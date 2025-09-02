@@ -30,29 +30,55 @@
 //   );
 // }
 
-import { NavLink, Outlet } from "react-router-dom";
+// import { NavLink, Outlet } from "react-router-dom";
+// import s from "./ProfileNavigation.module.css";
+
+// export default function ProfileNavigation() {
+//   return (
+//     <div className={s.container}>
+//       <h2 className={s.title}>My Profile</h2>
+//       <nav className={s.nav}>
+//         <NavLink
+//           to="own"
+//           className={({ isActive }) => (isActive ? s.active : "")}
+//         >
+//           My Recipes
+//         </NavLink>
+//         <NavLink
+//           to="favorite"
+//           className={({ isActive }) => (isActive ? s.active : "")}
+//         >
+//           Saved Recipes
+//         </NavLink>
+//       </nav>
+
+//       {/* Тут підставляться OwnRecipes або FavoriteRecipes */}
+//     </div>
+//   );
+// }
+
+import { NavLink } from "react-router-dom";
 import s from "./ProfileNavigation.module.css";
 
 export default function ProfileNavigation() {
   return (
     <div className={s.container}>
       <h2 className={s.title}>My Profile</h2>
+
       <nav className={s.nav}>
         <NavLink
           to="own"
-          className={({ isActive }) => (isActive ? s.active : "")}
+          className={({ isActive }) => (isActive ? s.active : s.link)}
         >
           My Recipes
         </NavLink>
         <NavLink
           to="favorite"
-          className={({ isActive }) => (isActive ? s.active : "")}
+          className={({ isActive }) => (isActive ? s.active : s.link)}
         >
           Saved Recipes
         </NavLink>
       </nav>
-
-      {/* Тут підставляться OwnRecipes або FavoriteRecipes */}
     </div>
   );
 }

@@ -126,12 +126,9 @@ function App() {
             />
           }
         >
-          {/* Вкладені маршрути */}
-          <Route path="/profile" element={<ProfilePage />}>
-            <Route index element={<Navigate to="own" replace />} />
-            <Route path="own" element={<OwnRecipes />} />
-            <Route path="favorite" element={<FavoriteRecipes />} />
-          </Route>
+          <Route index element={<Navigate to="own" replace />} />
+          <Route path="own" element={<OwnRecipes />} />
+          <Route path="favorite" element={<FavoriteRecipes />} />
         </Route>
       </Routes>
     </Suspense>
