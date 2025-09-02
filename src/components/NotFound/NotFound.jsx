@@ -7,7 +7,7 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   const handleBackHome = () => {
-    navigate("/");
+    navigate('/');
   };
 
   return (
@@ -16,6 +16,9 @@ const NotFound = () => {
       <h1 className={styles.title}>404</h1>
       <p className={styles.text}>Recipe not found</p>
       <button className={styles.button} onClick={handleBackHome}>
+        <svg className={styles.icon} height={24} width={24}>
+          <use href={`${iconSprite}#back_arrow_icon`}></use>
+        </svg>
         Back to Home
       </button>
     </div>

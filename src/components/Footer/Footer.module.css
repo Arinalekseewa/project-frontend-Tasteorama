@@ -3,8 +3,6 @@
   background: var(--dark-brown);
   width: 100%;
   padding: 24px 0;
-  position: absolute;
-  bottom: 0;
   font-family: var(--font-family);
   font-weight: var(--fw-semibold);
   color: var(--white);
@@ -33,6 +31,7 @@
 .footerIcon {
   width: 32px;
   height: 30px;
+  color: var(--white);
 }
 
 .logoSpan {
