@@ -8,17 +8,14 @@ import Hero from "../../components/Hero/Hero.jsx";
 import Pagination from "../../components/Pagination/Pagination.jsx";
 import { toast } from "react-toastify";
 import styles from "./MainPage.module.css";
-
-import { fetchRecipes, fetchFavoriteRecipes } from "../../redux/recipes/operations.js";
+import { fetchRecipes } from "../../redux/recipes/operations.js";
 import {
   selectRecipes,
   selectRecipesError,
   selectRecipesLoading,
-  selectRecipesTotalPages,
+  // selectTotalRecipes,
 } from "../../redux/recipes/selectors.js";
 import { selectFiltersError } from "../../redux/filters/selectors.js";
-import { selectIsLoggedIn } from "../../redux/auth/selectors.js";
-import { useSearchParams } from "react-router-dom";
 import { fetchCategories, fetchIngredients } from "../../redux/filters/operations.js";
 
 const RECIPES_PER_PAGE = 12;
@@ -27,15 +24,11 @@ export default function MainPage() {
   const dispatch = useDispatch();
 
   const recipes = useSelector(selectRecipes);
-  const totalRecipes = useSelector(selectRecipesTotalPages);
+  // const totalRecipes = useSelector(selectTotalRecipes);
   const recipesLoading = useSelector(selectRecipesLoading);
   const recipesError = useSelector(selectRecipesError);
   const filtersError = useSelector(selectFiltersError);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-
-  const [search, setSearch] = useSearchParams();
-  console.log(search.get('ingredient'));
-
+  
   const sectionRef = useRef(null);
   const isFirstRender = useRef(true);
 
@@ -56,8 +49,8 @@ export default function MainPage() {
   };
 
   const handleResetAndCloseFilters = () => {
-    setCurrentFilters({ category: "", ingredient: "" });
-    setSearchQuery("");
+    setCurrentFilters({ category: '', ingredient: '' });
+    setSearchQuery('');
     setPage(1);
     closeFiltersModal();
   };
@@ -66,6 +59,7 @@ export default function MainPage() {
     setSearchQuery(query);
     setPage(1);
   };
+  const loadRecipesRef = useRef();
 
   const loadRecipes = useCallback(() => {
     dispatch(
@@ -83,16 +77,10 @@ export default function MainPage() {
     currentFilters.ingredient,
     searchQuery,
     page,
+    RECIPES_PER_PAGE,
   ]);
 
-  // Завантаження улюблених рецептів, коли користувач увійшов у систему
-  useEffect(() => {
-    if (isLoggedIn) {
-      dispatch(fetchFavoriteRecipes({ page: 1, limit: 1000 })); 
-    }
-  }, [dispatch, isLoggedIn]);
-
-  // Viклик fetch на зміну фільтрів, сторінки або пошуку
+  // Виклик fetch на зміну фільтрів, сторінки або пошуку
   useEffect(() => {
     loadRecipes();
   }, [loadRecipes]);
@@ -108,6 +96,15 @@ export default function MainPage() {
     }
   }, [page, currentFilters.category, currentFilters.ingredient, searchQuery]);
 
+  useEffect(() => {
+    loadRecipesRef.current = loadRecipes;
+  }, [loadRecipes]);
+
+  useEffect(() => {
+    if (loadRecipesRef.current) {
+      loadRecipesRef.current();
+    }
+  }, [currentFilters.category, currentFilters.ingredient, searchQuery, page]);
   // Toast для помилок завантаження рецептів
   useEffect(() => {
     if (recipesError) {
@@ -145,7 +142,7 @@ export default function MainPage() {
           {searchQuery ? (
             <h1
               className={styles.pageTitle}
-            >{`Search Results for "${searchQuery}"`}</h1>
+            >{`Search Results for “${searchQuery}”`}</h1>
           ) : (
             <h1 className={styles.pageTitle}>Recipes</h1>
           )}
@@ -153,13 +150,13 @@ export default function MainPage() {
           <div className={styles.filtersAndCountWrapper}>
             {!recipesLoading && !recipesError && (
               <>
-                {totalRecipes > 0 ? (
+                {/* {totalRecipes > 0 ? (
                   <p className={styles.recipeCount}>
                     {totalRecipes} {totalRecipes === 1 ? "recipe" : "recipes"}
                   </p>
                 ) : (
                   <p>Sorry, no recipes match your search.</p>
-                )}
+                )} */}
               </>
             )}
             <Filters
@@ -180,12 +177,16 @@ export default function MainPage() {
 
           {recipesLoading && <Loader />}
 
+          {/* {!recipesLoading && !recipesError && recipes.length > 0 && (
+
+            <RecipeList recipes={recipes.recipes} />
+          )} */}
+
           <RecipeList recipes={recipes} />
-          
           {recipes.length > 0 && !recipesLoading && (
             <Pagination
               currentPage={page}
-              totalPages={Math.ceil(totalRecipes / RECIPES_PER_PAGE)}
+              // totalPages={Math.ceil(totalRecipes / RECIPES_PER_PAGE)}
               onPageChange={setPage}
             />
           )}

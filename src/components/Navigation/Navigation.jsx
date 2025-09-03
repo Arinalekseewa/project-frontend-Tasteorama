@@ -30,7 +30,7 @@ export default function Navigation({ isLoggedIn }) {
       ) : (
         <>
           <NavLink
-            to="/profile"
+            to="/recipes/own"
             className={({ isActive }) =>
               `${styles.link} ${isActive ? styles.active : ''}`
             }
@@ -41,7 +41,6 @@ export default function Navigation({ isLoggedIn }) {
             Add Recipe
           </NavLink>
           <div className={styles.userSection}>
-            {/* UserInfo сам підтягує name з localStorage */}
             <UserInfo />
             <LogoutBtn />
           </div>

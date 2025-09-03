@@ -5,6 +5,7 @@ import {
   logoutUser,
 } from "./operations";
 import { notifyError, notifySuccess } from "../utils/notifications";
+
 const initialState = {
   user: null,
   token: null,
@@ -15,6 +16,13 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    logout(state) {
+      state.user = null;
+      state.token = null;
+      state.refreshToken = null;
+      state.isLoggedIn = false;
+      state.error = null;
+    },
     clearError(state) {
       state.error = null;
     },
@@ -48,7 +56,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.IsLoggedIn = true; 
+        state.IsLoggedIn = true;
         notifySuccess("Login successful");
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -62,10 +70,28 @@ const authSlice = createSlice({
         state.token = null;
         state.loading = false;
         state.error = null;
-        state.IsLoggedIn = true; 
+        state.IsLoggedIn = false;
         notifySuccess("Logout successful");
+      })
+      //CurrentUser
+      .addCase('auth/fetchCurrentUser/pending', state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase('auth/fetchCurrentUser/fulfilled', (state, action) => {
+        state.user = action.payload;
+        state.isLoggedIn = true;
+        state.favorites = action.payload.favorites || [];
+      })
+      .addCase('auth/fetchCurrentUser/rejected', (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.token = null;
+        state.refreshToken = null;
+        state.isLoggedIn = false;
+        state.error = action.payload;
       });
   },
 });
-export const { clearError } = authSlice.actions;
+export const { login, logout, clearError } = authSlice.actions;
 export default authSlice.reducer;

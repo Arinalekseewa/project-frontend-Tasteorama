@@ -1,31 +1,15 @@
-import { useDispatch, useSelector } from "react-redux";
-import { saveRecipe, unsaveRecipe } from "../../redux/recipes";
-import { selectIsLoggedIn } from "../../redux/auth/selectors";
+// import { useSelector } from "react-redux";
+// import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import styles from "./RecipeDetails.module.css";
 import IngredientsList from "./IngredientsList";
 import StepsList from "./StepsList";
-import { openModal } from "../../redux/modal/slice";
-import { FaRegBookmark, FaBookmark } from "react-icons/fa";
+import FavoriteButton from "../RecipeCard/FavoriteButton/FavoriteButton.jsx";
 
 export default function RecipeDetails({ recipe }) {
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const saved = useSelector((state) => state.recipes.saved);
+  // const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  if (!recipe) return null;
-
-  const handleSaveClick = () => {
-    if (!isLoggedIn) {
-      dispatch(openModal({ type: "login" }));
-      return;
-    }
-
-    if (saved) {
-      dispatch(unsaveRecipe(recipe._id));
-    } else {
-      dispatch(saveRecipe(recipe._id));
-    }
-  };
+  // if (!recipe) return null;
+  const ingredients = [];
 
   return (
     <div className={styles.wrapper}>
@@ -35,7 +19,7 @@ export default function RecipeDetails({ recipe }) {
 
         {/* Зображення страви */}
         <div className={styles.imageWrapper}>
-          <img src={recipe.image} alt={recipe.title} className={styles.image} />
+          <img src={recipe.thumb} alt={recipe.title} className={styles.image} />
         </div>
       </div>
       <div className={styles.desctopinfo}>
@@ -47,25 +31,14 @@ export default function RecipeDetails({ recipe }) {
               <b>Category:</b> {recipe.category}
             </p>
             <p>
-              <b>Cooking time:</b> {recipe.cookingTime}
+              <b>Cooking time:</b> {recipe.time}
             </p>
             <p>
               <b>Calories:</b> {recipe.calories}
             </p>
           </section>
-
           {/* Save / Unsave */}
-          <button onClick={handleSaveClick} className={styles.saveBtn}>
-            {saved ? (
-              <>
-                <FaBookmark className={styles.icon} /> Unsave
-              </>
-            ) : (
-              <>
-                <FaRegBookmark className={styles.icon} /> Save
-              </>
-            )}
-          </button>
+          <FavoriteButton recipeId={recipe._id} /> {/* інтегрована кнопка */}
         </div>
 
         {/* Опис */}
@@ -84,7 +57,7 @@ export default function RecipeDetails({ recipe }) {
           {/* Кроки приготування */}
           <section>
             <h2 className={styles.subtitle}>Preparation Steps</h2>
-            <StepsList steps={recipe.steps} />
+            <StepsList steps={recipe.instructions} />
           </section>
         </div>
       </div>

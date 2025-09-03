@@ -1,49 +1,35 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {api} from "../../api/api";
-// import { getAllIngredientsAPI } from '../../api/ingredients.js';
+import { api } from "../../api/api";
+import {
+  getRecipeByIdAPI,
+  addFavoriteAPI,
+  removeFavoriteAPI,
+} from "../../api/recipes.js";
 
 // =======================
 // FETCH ALL RECIPES
 // =======================
 export const fetchRecipes = createAsyncThunk(
-  'recipes/fetchRecipes',
+  "recipes/fetchRecipes",
   async (
     { category, ingredient, search, page = 1, perPage = 12 },
     thunkAPI
   ) => {
     try {
       const params = new URLSearchParams();
-      if (category) {
-        params.append('category', category);
-      }
-      if (ingredient) {
-        params.append('ingredient', ingredient);
-      }
-      if (search) {
-        params.append('search', search);
-      }
-      params.append('page', page);
-      params.append('perPage', perPage);
+      if (category) params.append("category", category);
+      if (ingredient) params.append("ingredient", ingredient);
+      if (search) params.append("search", search);
+      params.append("page", page);
+      params.append("perPage", perPage);
+
       const response = await api.get(`/recipes?${params.toString()}`);
-      console.log(response.data.recipes);
       return response.data.recipes;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
-
-// export const fetchAllIngredients = createAsyncThunk(
-//   'recipe/fetchAllIngredients',
-//   async (_, thunkAPI) => {
-//     try {
-//       const res = await getAllIngredientsAPI();
-//       return res.data;
-//     } catch (e) {
-//       return thunkAPI.rejectWithValue(e.message);
-//     }
-//   }
-// );
 
 // =======================
 // FETCH RECIPE BY ID
@@ -52,8 +38,7 @@ export const fetchRecipeById = createAsyncThunk(
   "recipes/fetchRecipeById",
   async (recipeId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/recipes/${recipeId}`);
-      return response.data;
+      return await getRecipeByIdAPI(recipeId);
     } catch (error) {
       return rejectWithValue(error.response?.data || "Fetch recipe failed");
     }
@@ -64,13 +49,12 @@ export const fetchRecipeById = createAsyncThunk(
 // FETCH FAVORITE RECIPES
 // =======================
 export const fetchFavoriteRecipes = createAsyncThunk(
-  'recipes/fetchFavorites',
+  "recipes/fetchFavorites",
   async ({ page, limit }, thunkAPI) => {
     try {
       const response = await api.get(
         `/recipes/favorites?page=${page}&limit=${limit}`
       );
-
       const {
         data,
         page: currentPage,
@@ -90,8 +74,11 @@ export const fetchFavoriteRecipes = createAsyncThunk(
   }
 );
 
+// =======================
+// FETCH OWN RECIPES
+// =======================
 export const fetchOwnRecipes = createAsyncThunk(
-  'recipes/fetchOwn',
+  "recipes/fetchOwn",
   async ({ page, limit }, thunkAPI) => {
     try {
       const response = await api.get(
@@ -127,18 +114,29 @@ export const createRecipe = createAsyncThunk(
 );
 
 // =======================
-// UPDATE FAVORITE STATUS
+// ADD TO FAVORITES
 // =======================
-export const updateFavorite = createAsyncThunk(
-  "recipes/updateFavorite",
-  async ({ recipeId, isFavorite }, { rejectWithValue }) => {
+export const addFavorite = createAsyncThunk(
+  "recipes/addFavorite",
+  async (recipeId, { rejectWithValue }) => {
     try {
-      const response = await api.patch(`/recipes/${recipeId}/favorite`, {
-        isFavorite,
-      });
-      return response.data;
+      return await addFavoriteAPI(recipeId);
     } catch (error) {
-      return rejectWithValue(error.response?.data || "Update favorite failed");
+      return rejectWithValue(error.response?.data || "Add favorite failed");
+    }
+  }
+);
+
+// =======================
+// REMOVE FROM FAVORITES
+// =======================
+export const removeFavorite = createAsyncThunk(
+  "recipes/removeFavorite",
+  async (recipeId, { rejectWithValue }) => {
+    try {
+      return await removeFavoriteAPI(recipeId);
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Remove favorite failed");
     }
   }
 );
