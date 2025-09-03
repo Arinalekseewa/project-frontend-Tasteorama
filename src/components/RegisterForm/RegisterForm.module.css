@@ -230,4 +230,7 @@
     max-width: 420px;
     margin: 52px auto 34px auto;
   }
+  .containerCheckbox {
+    display: none;
+  }
 }
