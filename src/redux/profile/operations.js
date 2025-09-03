@@ -6,7 +6,7 @@ export const fetchProfile = createAsyncThunk(
   async (_, { rejectWithValue, getState }) => {
     try {
       const { token } = getState().auth;
-      const response = await api.get("/profile/own", {
+      const response = await api.get("/recipes/own", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

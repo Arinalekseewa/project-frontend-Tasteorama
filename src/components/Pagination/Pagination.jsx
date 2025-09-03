@@ -1,4 +1,3 @@
-
 import styles from './Pagination.module.css';
 import sprite from '../../../public/sprite.svg';
 
@@ -26,12 +25,13 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         className={styles.arrow}
         aria-label="previous page"
       >
-        <svg className={styles.icon}>
-          <use href={`${sprite}#icon-arrow-left`} />
+        <svg className={styles.iconBack}>
+          <use href={`${sprite}#back_arrow_icon`} />
         </svg>
       </button>
 
-      {pageNumbers.map(pageNum => (
+      <div className={styles.containerbtn}>
+        {pageNumbers.map(pageNum => (
         <button
           key={pageNum}
           onClick={() => onPageChange(pageNum)}
@@ -42,15 +42,16 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           {pageNum}
         </button>
       ))}
-
+      </div>
+      
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         className={styles.arrow}
         aria-label="next page"
       >
-        <svg className={styles.icon}>
-          <use href={`${sprite}#icon-arrow-right`} />
+        <svg className={styles.iconGo}>
+          <use href={`${sprite}#back_arrow_icon`} />
         </svg>
       </button>
     </div>

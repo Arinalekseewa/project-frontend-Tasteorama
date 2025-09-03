@@ -13,7 +13,7 @@ import {
   selectRecipes,
   selectRecipesError,
   selectRecipesLoading,
-  // selectTotalRecipes,
+  selectTotalRecipes,
 } from "../../redux/recipes/selectors.js";
 import { selectFiltersError } from "../../redux/filters/selectors.js";
 import { fetchCategories, fetchIngredients } from "../../redux/filters/operations.js";
@@ -24,10 +24,10 @@ export default function MainPage() {
   const dispatch = useDispatch();
 
   const recipes = useSelector(selectRecipes);
-  // const totalRecipes = useSelector(selectTotalRecipes);
   const recipesLoading = useSelector(selectRecipesLoading);
   const recipesError = useSelector(selectRecipesError);
   const filtersError = useSelector(selectFiltersError);
+  const totalRecipes = useSelector(selectTotalRecipes);
   
   const sectionRef = useRef(null);
   const isFirstRender = useRef(true);
@@ -91,9 +91,6 @@ export default function MainPage() {
       isFirstRender.current = false;
       return;
     }
-    if (sectionRef.current) {
-      sectionRef.current.scrollIntoView({ behavior: "smooth" });
-    }
   }, [page, currentFilters.category, currentFilters.ingredient, searchQuery]);
 
   useEffect(() => {
@@ -150,13 +147,13 @@ export default function MainPage() {
           <div className={styles.filtersAndCountWrapper}>
             {!recipesLoading && !recipesError && (
               <>
-                {/* {totalRecipes > 0 ? (
+                {totalRecipes > 0 ? (
                   <p className={styles.recipeCount}>
                     {totalRecipes} {totalRecipes === 1 ? "recipe" : "recipes"}
                   </p>
                 ) : (
                   <p>Sorry, no recipes match your search.</p>
-                )} */}
+                )}
               </>
             )}
             <Filters
@@ -186,7 +183,7 @@ export default function MainPage() {
           {recipes.length > 0 && !recipesLoading && (
             <Pagination
               currentPage={page}
-              // totalPages={Math.ceil(totalRecipes / RECIPES_PER_PAGE)}
+              totalPages={Math.ceil(totalRecipes / RECIPES_PER_PAGE)}
               onPageChange={setPage}
             />
           )}

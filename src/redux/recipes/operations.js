@@ -19,7 +19,7 @@ export const fetchRecipes = createAsyncThunk(
       const params = new URLSearchParams();
       if (category) params.append("category", category);
       if (ingredient) params.append("ingredient", ingredient);
-      if (search) params.append("search", search);
+      if (search) params.append("query", search);
       params.append("page", page);
       params.append("perPage", perPage);
 
@@ -55,19 +55,7 @@ export const fetchFavoriteRecipes = createAsyncThunk(
       const response = await api.get(
         `/recipes/favorites?page=${page}&limit=${limit}`
       );
-      const {
-        data,
-        page: currentPage,
-        hasNextPage,
-        totalItems,
-      } = response.data;
-
-      return {
-        recipes: data,
-        page: currentPage,
-        hasNextPage,
-        totalItems,
-      };
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -103,10 +91,11 @@ export const fetchOwnRecipes = createAsyncThunk(
 // =======================
 export const createRecipe = createAsyncThunk(
   "recipes/createRecipe",
-  async (newRecipeData, { rejectWithValue }) => {
+  async (formData, { rejectWithValue }) => {
     try {
-      const response = await api.post("/recipes", newRecipeData);
+      const response = await api.post("/recipes/add-recipe", formData);
       return response.data;
+      console.log(response.data);
     } catch (error) {
       return rejectWithValue(error.response?.data || "Create recipe failed");
     }
@@ -137,6 +126,35 @@ export const removeFavorite = createAsyncThunk(
       return await removeFavoriteAPI(recipeId);
     } catch (error) {
       return rejectWithValue(error.response?.data || "Remove favorite failed");
+    }
+  }
+);
+
+
+export const fetchAddRecipesToFavorite = createAsyncThunk(
+  "recipes/fetchAddRecipesToFavorite",
+  async (recipeId, { rejectWithValue }) => {
+    try {
+      const response = await api.post(`/recipes/favorites/${recipeId}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "Failed to add to favorites"
+      );
+    }
+  }
+);
+
+export const fetchDeleteRecipesFromFavorite = createAsyncThunk(
+  "recipes/fetchDeleteRecipesFromFavorite",
+  async (recipeId, { rejectWithValue }) => {
+    try {
+      const response = await api.delete(`/recipes/favorites/${recipeId}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "Added to favorites"
+      );
     }
   }
 );

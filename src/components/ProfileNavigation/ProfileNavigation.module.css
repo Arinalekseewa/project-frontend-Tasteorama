@@ -1,40 +1,28 @@
-.nav {
+.container {
   display: flex;
   gap: 38px;
-}
-
-.container {
-  margin: 46px 108px 46px 108px;
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 16px;
+  font-family: var(--font-family);
 }
 
 .link {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
-  font-size: 12px;
-  color: #000;
-  text-decoration: none;
+  font-size: 16px;
+  padding: 0px 0px 4px 0px;
+  transition: opacity 0.3s ease;
 }
 
 .link:hover {
-  border-bottom-color: #333;
   opacity: 0.5;
 }
 
-.active {
-  text-decoration: none;
-  border-bottom: 2px solid #333;
-  padding-bottom: 4px;
-  font-weight: 600;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
-  font-size: 12px;
-  color: #000;
+.link.active {
+  border-bottom: 1px solid #000000;
 }
 
-.title {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
-  font-size: 40px;
-  color: #000;
-  margin-bottom: 16px;
+@media screen and (min-width: 768px) {
+  .link {
+    font-size: 12px;
+  }
 }

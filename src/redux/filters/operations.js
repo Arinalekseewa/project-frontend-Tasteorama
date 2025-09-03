@@ -4,10 +4,10 @@ import {api} from "../../api/api";
 export const fetchCategories = createAsyncThunk(
   'filters/fetchCategories',
   async (_, thunkAPI) => {
-    // const state = thunkAPI.getState();
-    // if (state.filters.categories && state.filters.categories.length > 0) {
-    //   return state.filters.categories;
-    // }
+    const state = thunkAPI.getState();
+    if (state.filters.categories && state.filters.categories.length > 0) {
+      return state.filters.categories;
+    }
     try {
       const response = await api.get('/categories');
       return response.data.categories;
@@ -27,10 +27,10 @@ export const fetchCategories = createAsyncThunk(
 export const fetchIngredients = createAsyncThunk(
   'filters/fetchIngredients',
   async (_, thunkAPI) => {
-    // const state = thunkAPI.getState();
-    // if (state.filters.ingredients && state.filters.ingredients.length > 0) {
-    //   return state.filters.ingredients;
-    // }
+    const state = thunkAPI.getState();
+    if (state.filters.ingredients && state.filters.ingredients.length > 0) {
+      return state.filters.ingredients;
+    }
     try {
       const response = await api.get('/ingredients');
       return response.data.ingredients;
