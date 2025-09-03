@@ -26,8 +26,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         className={styles.arrow}
         aria-label="previous page"
       >
-        <svg className={styles.icon}>
-          <use href={`${sprite}#icon-arrow-left`} />
+        <svg className={styles.iconBack}>
+          <use href={`${sprite}#back_arrow_icon`} />
         </svg>
       </button>
 
@@ -51,8 +51,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         className={styles.arrow}
         aria-label="next page"
       >
-        <svg className={styles.icon}>
-          <use href={`${sprite}#icon-arrow-right`} />
+        <svg className={styles.iconGo}>
+          <use href={`${sprite}#back_arrow_icon`} />
         </svg>
       </button>
     </div>
