@@ -140,3 +140,32 @@ export const removeFavorite = createAsyncThunk(
     }
   }
 );
+
+
+export const fetchAddRecipesToFavorite = createAsyncThunk(
+  "recipes/fetchAddRecipesToFavorite",
+  async (recipeId, { rejectWithValue }) => {
+    try {
+      const response = await api.post(`/recipes/favorites/${recipeId}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "Failed to add to favorites"
+      );
+    }
+  }
+);
+
+export const fetchDeleteRecipesFromFavorite = createAsyncThunk(
+  "recipes/fetchDeleteRecipesFromFavorite",
+  async (recipeId, { rejectWithValue }) => {
+    try {
+      const response = await api.delete(`/recipes/favorites/${recipeId}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data || "Added to favorites"
+      );
+    }
+  }
+);
