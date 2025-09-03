@@ -142,6 +142,7 @@ export default function AddRecipePage() {
       form.append('instructions', values.instructions.trim());
       form.append('description', values.description.trim());
       form.append('time', values.cookingTime);
+      console.log(form);
       if (values.calories) form.append('cals', values.calories);
 
       const toNumber = v => {
@@ -155,13 +156,14 @@ export default function AddRecipePage() {
       }));
       form.append('ingredients', JSON.stringify(ingredientsPayload));
       if (values.photo) form.append('thumb', values.photo);
-
+    
       const created = await dispatch(createRecipe(form)).unwrap();
       const id =
         created?.data?._id || created?.data?.id || created?._id || created?.id;
       console.log('Recipe created successfully ✅');
-      resetForm();
+      // resetForm();
       navigate(id ? `/recipes/${id}` : '/recipes');
+      console
     } catch (e) {
       console.log('Failed to create recipe');
     } finally {
