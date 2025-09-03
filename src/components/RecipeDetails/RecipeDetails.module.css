@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 32px 16px;
+  padding: 0px;
 }
 
 .title {
@@ -20,7 +20,8 @@
 }
 
 .image {
-  max-width: 361px;
+  width: 100%;
+  max-width: 704px;
   height: auto;
   border-radius: 8px;
   object-fit: cover;
@@ -34,6 +35,7 @@
   justify-content: center;
   margin: 0 auto;
   padding: 0px;
+  margin-bottom: 24px;
 }
 .infoBox {
   background: var(--light-beige);
@@ -100,18 +102,21 @@
   transition: color 0.2s ease;
 } */
 
+.imageWrapper {
+  margin-bottom: 32px;
+}
 .infocomtainer {
+  display: flex;
+  flex-direction: column;
   margin: 0;
+  gap: 40px;
 }
 
 /* 🔹 Tablet */
 @media (min-width: 768px) {
-  .wrapper {
-    padding: 48px 32px;
-    max-width: 768px;
-  }
   .title {
     margin-top: 0;
+    text-align: start;
   }
   .blockwrapper {
     flex-direction: column;
@@ -147,19 +152,30 @@
   }
 }
 
-@media (min-width: 1200px) {
-  .wrapper {
-    max-width: 1225px;
-    padding-right: 107.5px;
-    padding-left: 107.5px;
+.imageWrapper {
+  margin-bottom: none;
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --recipe-bg: #34373a;
+  }
+  .imageWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--recipe-bg);
+    border-radius: 8px;
   }
 
-  .title {
-    text-align: start;
-  }
   .image {
-    max-width: 1225px;
+    width: 100%; /* розтягнути по контейнеру */
+    max-width: 1226px; /* як у Figma */
+    height: 624px; /* фіксована висота з макета */
+    object-fit: cover; /* щоб картинка не сплющувалась */
+    border-radius: 8px;
   }
+
   .desctopinfo {
     display: flex;
     flex-direction: row-reverse;
@@ -174,6 +190,7 @@
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    justify-content: flex-start;
     gap: 24px;
   }
   .infoBox {

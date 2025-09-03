@@ -20,6 +20,7 @@ const initialState = {
   isLoading: false,   // окремий для власних рецептів (infinite scroll та ін.)
   error: null,
   page: 1,
+  limit: 12,
   perPage: 12,        // зберігаємо, якщо бекенд повертає пагінацію
   limit: 12,          // локальний ліміт
   total: 0,
@@ -59,7 +60,7 @@ const recipesSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchRecipes.fulfilled, (state, action) => {
-        state.loading = false;
+        state.items = action.payload.data || action.payload;
         const data = getData(action.payload);
         // Якщо бекенд повертає об'єкт із { data, page, perPage }:
         if (Array.isArray(data)) {
@@ -132,6 +133,24 @@ const recipesSlice = createSlice({
       })
       .addCase(addFavorite.fulfilled, (state, action) => {
         state.loading = false;
+        const addedRecipe = action.payload.data || action.payload;
+
+        // Оновлюємо рецепт у списку
+        const index = state.items.findIndex((r) => r._id === addedRecipe._id);
+        if (index !== -1) {
+          state.items[index] = addedRecipe;
+        }
+
+        // Оновлюємо поточний рецепт
+        if (state.currentRecipe?._id === addedRecipe._id) {
+          state.currentRecipe = { ...state.currentRecipe, isFavorite: true };
+        }
+
+        // Додаємо рецепт до favoriteItems, якщо його там ще нема
+        if (!state.favoriteItems.some((r) => r._id === addedRecipe._id)) {
+          state.favoriteItems.push(addedRecipe);
+        }
+
 
         const recipe = getData(action.payload);
         if (!recipe?._id) return;
@@ -149,9 +168,9 @@ const recipesSlice = createSlice({
         if (!state.favoriteItems.some((r) => r._id === recipe._id)) {
           state.favoriteItems.push({ ...recipe, isFavorite: true });
         }
-
         notifySuccess("Рецепт додано до обраного!");
       })
+
       .addCase(addFavorite.rejected, (state, action) => {
         state.loading = false;
         state.error = getErrorMessage(action.payload);
