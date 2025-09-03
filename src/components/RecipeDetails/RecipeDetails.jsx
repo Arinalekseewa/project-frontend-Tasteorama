@@ -1,13 +1,10 @@
 import styles from "./RecipeDetails.module.css";
 import IngredientsList from "./IngredientsList";
 import StepsList from "./StepsList";
-import FavoriteButton from "../RecipeCard/FavoriteButton/FavoriteButton.jsx";
+import FavoriteButtonFull from "./FavoriteButtonFull.jsx";
 
 export default function RecipeDetails({ recipe }) {
-  // const isLoggedIn = useSelector(selectIsLoggedIn);
-
-  // if (!recipe) return null;
-  // const ingredients = [];
+  if (!recipe) return null;
 
   return (
     <div className={styles.wrapper}>
@@ -44,7 +41,7 @@ export default function RecipeDetails({ recipe }) {
             </div>
           </section>
           {/* Save / Unsave */}
-          <FavoriteButton recipeId={recipe._id} /> {/* інтегрована кнопка */}
+          <FavoriteButtonFull recipeId={recipe._id} />
         </div>
 
         {/* Опис */}

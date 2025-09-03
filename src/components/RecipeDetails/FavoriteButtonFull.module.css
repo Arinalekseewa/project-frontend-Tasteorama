@@ -1,0 +1,61 @@
+.saveBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  width: 361px;
+  height: 56px;
+  padding: 16px;
+  background-color: var(--light-brown);
+  color: #fff;
+  font-weight: 600;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+}
+
+.saveBtn:hover,
+.saveBtn:focus {
+  background-color: var(--brown);
+  outline: none;
+}
+
+.saveBtn:active {
+  background-color: var(--light-brown);
+  box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px var(--white);
+}
+
+.saveBtn:disabled {
+  box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px var(--white);
+  background: var(--light-brown);
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.icon {
+  font-size: 20px;
+  color: #fff;
+}
+
+.label {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 18px;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .saveBtn {
+    width: 249px;
+    height: 56px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .saveBtn {
+    min-width: 393px;
+    align-self: auto;
+  }
+}
