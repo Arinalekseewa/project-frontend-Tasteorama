@@ -18,15 +18,12 @@ const initialState = {
   error: null,
   page: 1,
   limit: 12,
-<<<<<<< HEAD
   total: 0,
-=======
   own: {
     items: [],
     total: 0,
     hasNextPage: false,
   },
->>>>>>> refs/remotes/origin/main
 };
 
 // const recipesSlice = createSlice({
@@ -225,13 +222,11 @@ const recipesSlice = createSlice({
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload.data || action.payload;
-<<<<<<< HEAD
 
         if (action.payload.total) {
     state.total = action.payload.total;
   }
-=======
->>>>>>> refs/remotes/origin/main
+
         if (action.payload.page) {
           state.page = action.payload.page;
           state.perPage = action.payload.perPage;
@@ -300,7 +295,12 @@ const recipesSlice = createSlice({
         // Оновлюємо список улюблених
         const favIndex = state.favoriteItems.findIndex(
           (r) => r._id === updatedRecipe._id
-        const addedRecipe = action.payload.data;
+        );
+        if (updatedRecipe.isFavorite) {
+          if (favIndex === -1) state.favoriteItems.push(updatedRecipe);
+        } else {
+          if (favIndex !== -1) state.favoriteItems.splice(favIndex, 1);
+        }
 
         // Додаємо рецепт до favoriteItems
         if (!state.favoriteItems.some((r) => r._id === addedRecipe._id)) {

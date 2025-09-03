@@ -18,7 +18,6 @@ export default function FavoriteRecipes() {
   const totalSavedRecipes = useSelector(selectFavoriteTotal);
   const isLoading = useSelector(selectFavoriteRecipesLoading);
   const [page, setPage] = useState(1);
-  // const [hasMore, setHasMore] = useState(true);
 
   const RECIPES_PER_PAGE = 12;
   const sectionRef = useRef(null);
@@ -40,7 +39,7 @@ export default function FavoriteRecipes() {
     });
   };
 
-  // const loadMore = () => setPage(prev => prev + 1);
+  const hasNextPage = recipes.length < totalSavedRecipes;
 
   return (
     <>
@@ -49,9 +48,17 @@ export default function FavoriteRecipes() {
           <p className={s.totalItems}>{`${totalSavedRecipes} recipes`}</p>
         )}
       </div>
+
       {isLoading && <Loader />}
-      <RecipeList recipes={recipes} type="favorites" onRemove={handleRemove} />
-      {/* {hasMore && recipes.length > 0 && <LoadMoreBtn onClick={loadMore} />} */}
+
+      {recipes.length > 0 ? (
+        <RecipeList recipes={recipes} type="favorites" onRemove={handleRemove} />
+      ) : (
+        !isLoading && <NotFound message="You have no saved recipes yet." />
+      )}
+
+      {hasNextPage && <LoadMoreBtn onClick={() => setPage((prev) => prev + 1)} />}
+
       {recipes.length > 0 && !isLoading && (
         <Pagination
           currentPage={page}
@@ -62,3 +69,4 @@ export default function FavoriteRecipes() {
     </>
   );
 }
+

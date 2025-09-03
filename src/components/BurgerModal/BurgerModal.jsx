@@ -56,7 +56,7 @@ export default function BurgerModal({ onClose, isLoggedIn }) {
               <>
                 <li>
                   <NavLink
-                    to="/profile/own"
+                    to="/recipes/own"
                     className={styles.link}
                     onClick={onClose}
                   >

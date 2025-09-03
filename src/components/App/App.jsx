@@ -1,6 +1,6 @@
-import { useDispatch, lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
-import { useEffect, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { lazy, Suspense, useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "../Layout/Layout";
 import PublicRoute from "../PublicRoute";
 import PrivateRoute from "../PrivateRoute";
@@ -91,15 +91,7 @@ function App() {
               <PrivateRoute redirectTo="/auth/login" component={<AuthPage />} />
             }
           />
-          <Route
-            path="/recipes/own"
-            element={
-              <PrivateRoute
-                component={<ProfilePage />}
-                redirectTo="/auth/login"
-              />
-            }
-          />
+
           <Route
             path="/add-recipe"
             element={
@@ -109,22 +101,17 @@ function App() {
               />
             }
           />
+          <Route
+    path="recipes"
+    element={<PrivateRoute component={<ProfilePage />} redirectTo="/auth/login" />}
+  >
+    <Route index element={<Navigate to="own" />} />
+    <Route path="own" element={<OwnRecipes />} />
+    <Route path="favorites" element={<FavoriteRecipes />} />
+  </Route>
 
-          {/* Not found */}
+        {/* Not found */}
           <Route path="*" element={<NotFound />} />
-        </Route>
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute
-              component={<ProfilePage />}
-              redirectTo="/auth/login"
-            />
-          }
-        >
-          <Route index element={<Navigate to="own" replace />} />
-          <Route path="own" element={<OwnRecipes />} />
-          <Route path="favorite" element={<FavoriteRecipes />} />
         </Route>
       </Routes>
     </Suspense>

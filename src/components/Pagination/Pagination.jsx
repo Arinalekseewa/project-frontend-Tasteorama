@@ -31,7 +31,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         </svg>
       </button>
 
-      {pageNumbers.map(pageNum => (
+      <div className={styles.containerbtn}>
+        {pageNumbers.map(pageNum => (
         <button
           key={pageNum}
           onClick={() => onPageChange(pageNum)}
@@ -42,7 +43,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           {pageNum}
         </button>
       ))}
-
+      </div>
+      
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}

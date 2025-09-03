@@ -3,6 +3,7 @@
     align-items: baseline;
     justify-content: space-between;
     margin-bottom: 16px;
+    font-family: var(--font-family);
 }
 
 .recipeCount {
@@ -12,6 +13,7 @@
 }
 
 .pageTitle {
+  font-family: var(--font-family);
     font-weight: 600;
     font-size: 32px;
     color: #000;

@@ -19,7 +19,7 @@ export const fetchRecipes = createAsyncThunk(
       const params = new URLSearchParams();
       if (category) params.append("category", category);
       if (ingredient) params.append("ingredient", ingredient);
-      if (search) params.append("search", search);
+      if (search) params.append("query", search);
       params.append("page", page);
       params.append("perPage", perPage);
 

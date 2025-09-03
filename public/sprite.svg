@@ -76,6 +76,10 @@ d="M67.9741 47.2115C67.9741 55.7879 59.703 62.7404 49.5001 62.7404C39.2972 62.74
 stroke="currentColor"/><path
 d="M1.46777 68.625L1.46778 30.7764C1.46778 24.4158 7.60195 19.2596 15.1688 19.2596C20.3584 19.2596 25.1026 16.7949 27.4234 12.8932L30.5286 7.67302C33.0979 3.35351 38.3501 0.624982 44.0954 0.625L54.9049 0.625035C60.6502 0.625053 65.9023 3.35359 68.4716 7.67307L71.5768 12.8933C73.8976 16.7951 78.6418 19.2597 83.8314 19.2597C91.3983 19.2597 97.5324 24.4159 97.5324 30.7765V68.625C97.5324 75.6666 90.7414 81.375 82.3643 81.375H16.6359C8.25876 81.375 1.46777 75.6666 1.46777 68.625Z" stroke="currentColor"/>
 
+<!--Pagination arrows-->
+<symbol id="icon-arrow-left" viewBox="0 0 32 32"><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.333" d="m25.997 16-19.996.004m0 0 5.384 5.386m-5.384-5.386 5.384-5.386" style="stroke:var(--color1, #fff)"/></symbol>
+<symbol id="icon-arrow-right" viewBox="0 0 32 32"><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.333" d="M6 16.004 25.996 16m0 0-5.384-5.386M25.996 16l-5.384 5.386" style="stroke:var(--color1, #fff)"/></symbol>
+
 </symbol>
 
 </svg>

@@ -39,12 +39,6 @@ export default function OwnRecipes() {
     dispatch(fetchOwnRecipes({ page, limit: RECIPES_PER_PAGE }));
   }, [dispatch, page]);
 
-  useEffect(() => {
-    if (sectionRef.current) {
-      sectionRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [page]);
-
   //   const handleLoadMore = () => {
   //     const nextPage = page + 1;
   //     dispatch(fetchOwnRecipes({ page: nextPage, limit: 12 }));
@@ -65,7 +59,7 @@ export default function OwnRecipes() {
       {isLoading && <Loader />}
 
       {ownRecipes.length > 0 ? (
-        <RecipeList recipes={ownRecipes} type="own" />
+        <RecipeList recipes={ownRecipes} type="/own" />
       ) : (
         !isLoading && <NotFound message="You have no recipes yet." />
       )}
