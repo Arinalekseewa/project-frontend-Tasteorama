@@ -30,7 +30,7 @@
   background-color: #9b6c43;
   border: none;
   color: white;
-  padding: 8px 12px;
+  padding: 8px;
   border-radius: 6px;
   cursor: pointer;
   transition: opacity 0.3s ease;
@@ -58,9 +58,14 @@
   width: 40px;
   height: 40px;
 }
-.icon {
+.iconBack,
+.iconGo {
   width: 24px;
   height: 24px;
   display: inline-block;
   fill: currentColor;
+}
+
+.iconGo{
+  transform: scaleX(-1);
 }
