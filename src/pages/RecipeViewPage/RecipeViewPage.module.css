@@ -12,8 +12,8 @@
 }
 @media (min-width: 1440px) {
   .page {
-    max-width: 1225px;
-    padding: 48px 107.5px;
+    min-width: 1225px;
+    padding: 0;
     display: flex;
     gap: 24px;
     align-items: flex-start;

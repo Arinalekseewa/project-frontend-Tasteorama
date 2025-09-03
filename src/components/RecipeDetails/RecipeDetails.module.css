@@ -20,7 +20,8 @@
 }
 
 .image {
-  max-width: 361px;
+  width: 100%;
+  max-width: 704px;
   height: auto;
   border-radius: 8px;
   object-fit: cover;
@@ -115,6 +116,7 @@
 @media (min-width: 768px) {
   .title {
     margin-top: 0;
+    text-align: start;
   }
   .blockwrapper {
     flex-direction: column;
@@ -155,12 +157,25 @@
 }
 
 @media (min-width: 1440px) {
-  .title {
-    text-align: start;
+  :root {
+    --recipe-bg: #34373a;
   }
+  .imageWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--recipe-bg);
+    border-radius: 8px;
+  }
+
   .image {
-    max-width: 1225px;
+    width: 100%; /* розтягнути по контейнеру */
+    max-width: 1226px; /* як у Figma */
+    height: 624px; /* фіксована висота з макета */
+    object-fit: cover; /* щоб картинка не сплющувалась */
+    border-radius: 8px;
   }
+
   .desctopinfo {
     display: flex;
     flex-direction: row-reverse;

@@ -19,7 +19,13 @@ export default function RecipeDetails({ recipe }) {
 
         {/* Зображення страви */}
         <div className={styles.imageWrapper}>
-          <img src={recipe.thumb} alt={recipe.title} className={styles.image} />
+          <div className={styles.imageBackground}>
+            <img
+              src={recipe.thumb}
+              alt={recipe.title}
+              className={styles.image}
+            />
+          </div>
         </div>
       </div>
       <div className={styles.desctopinfo}>
