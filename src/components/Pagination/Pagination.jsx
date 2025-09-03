@@ -1,4 +1,3 @@
-
 import styles from './Pagination.module.css';
 import sprite from '../../../public/sprite.svg';
 

@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import s from "./FavoriteRecipes.module.css";
 import Loader from "../Loader/Loader.jsx";
 import Pagination from "../Pagination/Pagination.jsx";
+import NotFound from "../NotFound/NotFound.jsx"
 
 export default function FavoriteRecipes() {
   const dispatch = useDispatch();

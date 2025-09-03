@@ -1,6 +1,6 @@
-import { useDispatch, lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
-import { useEffect, useSelector } from "react-redux";
+import { useEffect, lazy, Suspense } from "react";
+import { Routes, Route, Navigate  } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux"
 import Layout from "../Layout/Layout";
 import PublicRoute from "../PublicRoute";
 import PrivateRoute from "../PrivateRoute";

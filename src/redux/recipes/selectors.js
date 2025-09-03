@@ -25,10 +25,8 @@ export const selectHasNextPage = (state) =>
 // ==== Favorite recipes ====
 export const selectFavoriteRecipesState = state => state.recipes.favoriteRecipes;
 
-export const selectFavoriteRecipes = createSelector(
-  [selectFavoriteRecipesState],
-  (favoriteRecipes) => favoriteRecipes // тепер повертає однакову референцію, якщо дані не змінились
-);
+export const selectFavoriteRecipes = (state) => state.recipes.favoriteRecipes || [];
+
 export const selectFavoriteTotal = (state) =>
   state.recipes.favorite?.total ?? 0;
 export const selectFavoriteRecipesLoading = (state) => state.recipes.loading;
