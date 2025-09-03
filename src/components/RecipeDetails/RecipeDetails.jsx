@@ -1,5 +1,3 @@
-// import { useSelector } from "react-redux";
-// import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import styles from "./RecipeDetails.module.css";
 import IngredientsList from "./IngredientsList";
 import StepsList from "./StepsList";
@@ -9,7 +7,7 @@ export default function RecipeDetails({ recipe }) {
   // const isLoggedIn = useSelector(selectIsLoggedIn);
 
   // if (!recipe) return null;
-  const ingredients = [];
+  // const ingredients = [];
 
   return (
     <div className={styles.wrapper}>
