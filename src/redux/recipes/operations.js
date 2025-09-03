@@ -103,9 +103,9 @@ export const fetchOwnRecipes = createAsyncThunk(
 // =======================
 export const createRecipe = createAsyncThunk(
   "recipes/createRecipe",
-  async (newRecipeData, { rejectWithValue }) => {
+  async (formData, { rejectWithValue }) => {
     try {
-      const response = await api.post("/recipes", newRecipeData);
+      const response = await api.post("/recipes/add-recipe", formData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Create recipe failed");
