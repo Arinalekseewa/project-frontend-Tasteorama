@@ -31,15 +31,17 @@ export default function RecipeDetails({ recipe }) {
         <div className={styles.metaRow}>
           <section className={styles.infoBox}>
             <h2 className={styles.subtitle}>General informations</h2>
-            <p>
-              <b>Category:</b> {recipe.category}
-            </p>
-            <p>
-              <b>Cooking time:</b> {recipe.time}
-            </p>
-            <p>
-              <b>Calories:</b> {recipe.calories}
-            </p>
+            <div className={styles.infoBoxItem}>
+              <p>
+                <b>Category:</b> {recipe.category}
+              </p>
+              <p>
+                <b>Cooking time:</b> {recipe.time}
+              </p>
+              <p>
+                <b>Calories:</b> {recipe.calories}
+              </p>
+            </div>
           </section>
           {/* Save / Unsave */}
           <FavoriteButton recipeId={recipe._id} /> {/* інтегрована кнопка */}
