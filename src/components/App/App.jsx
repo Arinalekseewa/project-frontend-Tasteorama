@@ -1,15 +1,17 @@
-import { useDispatch, lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
-import { useEffect, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { lazy, Suspense } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+
 import Layout from "../Layout/Layout";
 import PublicRoute from "../PublicRoute";
 import PrivateRoute from "../PrivateRoute";
 import { selectIsRefreshing } from "../../redux/auth/selectors.js";
-import { autoLogin } from '../../redux/auth/operations';
+import { autoLogin } from "../../redux/auth/operations";
 import {
   fetchCategories,
   fetchIngredients,
-} from '../../redux/filters/operations.js';
+} from "../../redux/filters/operations.js";
 
 const MainPage = lazy(() => import("../../pages/MainPage/MainPage"));
 const RecipeViewPage = lazy(() =>
@@ -36,7 +38,6 @@ function App() {
     dispatch(fetchCategories());
     dispatch(fetchIngredients());
   }, [dispatch]);
-
 
   if (isRefreshing) {
     return <p>Loading...</p>;

@@ -1,61 +1,61 @@
 .favoriteButtonOff {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        padding: 8px;
-        border: 1px solid #000;
-        border-radius: 8px;
-        background: transparent;
-        cursor: pointer;
-        transition: transform 0.3s ease, background-color 0.3s ease, border 0.3s ease,
-                box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border: 1px solid #000;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease, border 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .favoriteButtonOff:hover,
 .favoriteButtonOff:focus {
-    border: 1px solid #9B6C43;
-    background-color: #9B6C43;
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid #9b6c43;
+  background-color: #9b6c43;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .favoriteButtonOff:hover .off {
-    stroke: #FFFFFF;
+  stroke: #ffffff;
 }
 
 .favoriteButtonOn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    padding: 8px;
-    border: 1px solid #9B6C43;
-    background-color: #9B6C43;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.3s ease, background-color 0.3s ease, border 0.3s ease,
-            box-shadow 0.3s ease;    
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border: 1px solid #9b6c43;
+  background-color: #9b6c43;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease, border 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .favoriteButtonOn:hover,
 .favoriteButtonOn:focus {
-    border: 1px solid #000000;
-    background-color: transparent;
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid #000000;
+  background-color: transparent;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .favoriteButtonOn:hover .on {
-    stroke: #000000;
+  stroke: #000000;
 }
 
 .off {
-    stroke: #000000;
+  stroke: #000000;
 }
 
 .on {
-    stroke: #FFFFFF;
+  stroke: #ffffff;
 }

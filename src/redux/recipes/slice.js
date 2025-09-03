@@ -18,15 +18,11 @@ const initialState = {
   error: null,
   page: 1,
   limit: 12,
-<<<<<<< HEAD
-  total: 0,
-=======
   own: {
     items: [],
     total: 0,
     hasNextPage: false,
   },
->>>>>>> refs/remotes/origin/main
 };
 
 // const recipesSlice = createSlice({
@@ -225,13 +221,6 @@ const recipesSlice = createSlice({
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.loading = false;
         state.items = action.payload.data || action.payload;
-<<<<<<< HEAD
-
-        if (action.payload.total) {
-    state.total = action.payload.total;
-  }
-=======
->>>>>>> refs/remotes/origin/main
         if (action.payload.page) {
           state.page = action.payload.page;
           state.perPage = action.payload.perPage;
@@ -287,33 +276,27 @@ const recipesSlice = createSlice({
       })
       .addCase(addFavorite.fulfilled, (state, action) => {
         state.loading = false;
-        const updatedRecipe = action.payload;
-        // Оновлюємо рецепт у списку
-        const index = state.items.findIndex((r) => r._id === updatedRecipe._id);
-        if (index !== -1) {
-          state.items[index] = updatedRecipe;
-        }
-        // Оновлюємо поточний рецепт
-        if (state.currentRecipe?._id === updatedRecipe._id) {
-          state.currentRecipe = updatedRecipe;
-        }
-        // Оновлюємо список улюблених
-        const favIndex = state.favoriteItems.findIndex(
-          (r) => r._id === updatedRecipe._id
-        const addedRecipe = action.payload.data;
+        const addedRecipe = action.payload.data || action.payload;
 
-        // Додаємо рецепт до favoriteItems
+        // Оновлюємо рецепт у списку
+        const index = state.items.findIndex((r) => r._id === addedRecipe._id);
+        if (index !== -1) {
+          state.items[index] = addedRecipe;
+        }
+
+        // Оновлюємо поточний рецепт
+        if (state.currentRecipe?._id === addedRecipe._id) {
+          state.currentRecipe = { ...state.currentRecipe, isFavorite: true };
+        }
+
+        // Додаємо рецепт до favoriteItems, якщо його там ще нема
         if (!state.favoriteItems.some((r) => r._id === addedRecipe._id)) {
           state.favoriteItems.push(addedRecipe);
         }
 
-        // Якщо цей рецепт відкритий → позначаємо як обраний
-        if (state.currentRecipe?._id === addedRecipe._id) {
-          state.currentRecipe.isFavorite = true;
-        }
-
         notifySuccess("Рецепт додано до обраного!");
       })
+
       .addCase(addFavorite.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
