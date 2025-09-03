@@ -197,12 +197,10 @@ const recipesSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
-        state.loading = false;
-        const favorites = getData(action.payload);
-        state.favoriteItems = Array.isArray(favorites) ? favorites : [];
-        const favoriteRecipes = action.payload.recipes || action.payload.data || action.payload;
-        state.favoriteItems = Array.isArray(favoriteRecipes) ? favoriteRecipes : [];
-      })
+  state.loading = false;
+  const favorites = getData(action.payload);
+  state.favoriteItems = Array.isArray(favorites) ? favorites : [];
+})
       .addCase(fetchFavoriteRecipes.rejected, (state, action) => {
         state.loading = false;
         state.error = getErrorMessage(action.payload);

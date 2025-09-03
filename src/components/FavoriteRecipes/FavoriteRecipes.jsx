@@ -23,9 +23,25 @@ export default function FavoriteRecipes() {
   const RECIPES_PER_PAGE = 12;
   const sectionRef = useRef(null);
 
+  // useEffect(() => {
+  //   dispatch(fetchFavoriteRecipes({ page, limit: RECIPES_PER_PAGE }));
+  // }, [page, dispatch]);
+
   useEffect(() => {
-    dispatch(fetchFavoriteRecipes({ page, limit: RECIPES_PER_PAGE }));
-  }, [page, dispatch]);
+  const params = { page, limit: RECIPES_PER_PAGE };
+  console.log("Dispatching fetchFavoriteRecipes with params:", params);
+
+  dispatch(fetchFavoriteRecipes(params))
+    .unwrap() // якщо це createAsyncThunk, щоб отримати результат або помилку
+    .then((result) => {
+      console.log("fetchFavoriteRecipes success:", result
+      );
+    })
+    .catch((error) => {
+      console.error("fetchFavoriteRecipes error:", error);
+    });
+}, [page, dispatch]);
+
 
   useEffect(() => {
     if (sectionRef.current) {

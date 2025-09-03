@@ -59,7 +59,7 @@ export default function OwnRecipes() {
       {isLoading && <Loader />}
 
       {ownRecipes.length > 0 ? (
-        <RecipeList recipes={ownRecipes} type="/own" />
+        <RecipeList recipes={ownRecipes} type="own" />
       ) : (
         !isLoading && <NotFound message="You have no recipes yet." />
       )}

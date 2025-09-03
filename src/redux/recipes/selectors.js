@@ -25,7 +25,7 @@ export const selectHasNextPage = (state) =>
 // ==== Favorite recipes ====
 export const selectFavoriteRecipesState = state => state.recipes.favoriteRecipes;
 
-export const selectFavoriteRecipes = (state) => state.recipes.favoriteRecipes || [];
+export const selectFavoriteRecipes = (state) => state.recipes.favoriteItems || [];
 
 export const selectFavoriteTotal = (state) =>
   state.recipes.favorite?.total ?? 0;
