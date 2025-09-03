@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { registerUser } from "../../redux/auth/operations";
 import styles from "./RegisterForm.module.css";
-
+import { toast } from "react-toastify";
 const RegisterForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const RegisterForm = () => {
   const handleSubmit = (values, { setSubmitting, resetForm }) => {
     // локальна перевірка confirmPassword
     if (values.password !== values.confirmPassword) {
-      alert("Passwords do not match");
+      toast.error("Passwords do not match");
       setSubmitting(false);
       return;
     }
@@ -61,13 +61,15 @@ const RegisterForm = () => {
       .catch((error) => {
         // детальна обробка помилок
         if (error?.status === 409 || error?.message?.includes("Conflict")) {
-          alert(
+          toast.error(
             "A user with this email already exists. Please login or use another email."
           );
         } else if (error?.status === 400) {
-          alert("Invalid data. Please check the form.");
+          toast.error("Invalid data. Please check the form.");
         } else {
-          alert(error?.message || "Registration failed. Please try again.");
+          toast.error(
+            error?.message || "Registration failed. Please try again."
+          );
         }
       })
       .finally(() => setSubmitting(false));
@@ -165,6 +167,17 @@ const RegisterForm = () => {
                 className={styles.error}
               />
             </div>
+            <label className={styles.containerCheckbox}>
+              <input type="checkbox" className={styles.checkbox} />
+              <span className={styles.customCheckbox}>
+                <svg className={styles.checkIcon} width="16" height="16">
+                  <use href="/public/sprite.svg#checkbox_icon" />
+                </svg>
+              </span>
+              <span className={styles.labelText}>
+                I agree to the Terms of Service and Privacy Policy
+              </span>
+            </label>
 
             <button
               type="submit"
