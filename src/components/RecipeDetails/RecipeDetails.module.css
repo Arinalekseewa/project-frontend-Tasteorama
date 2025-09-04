@@ -127,22 +127,29 @@
 }
 
 @media (min-width: 1440px) {
+  .wrapper {
+    justify-content: center;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+  }
   :root {
     --recipe-bg: #34373a;
   }
+
   .imageWrapper {
     width: 100%;
-    display: flex;
-    justify-content: center;
     background-color: var(--recipe-bg);
     border-radius: 8px;
+    display: flex;
+    justify-content: center;
   }
 
   .image {
-    width: 100%; /* розтягнути по контейнеру */
-    max-width: 1226px; /* як у Figma */
-    height: 624px; /* фіксована висота з макета */
-    object-fit: cover; /* щоб картинка не сплющувалась */
+    width: 100%;
+    max-width: 1226px;
+    height: 624px;
+    object-fit: cover;
     border-radius: 8px;
   }
 
