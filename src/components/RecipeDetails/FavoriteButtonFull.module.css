@@ -16,6 +16,11 @@
   transition: background-color 0.3s ease, box-shadow 0.2s ease;
 }
 
+/* Коли кнопка активна (Unsave) */
+.saveBtn.active {
+  background-color: var(--brown);
+}
+
 .saveBtn:hover,
 .saveBtn:focus {
   background-color: var(--brown);
@@ -34,18 +39,40 @@
   cursor: not-allowed;
 }
 
+/* Текст */
+.label {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--white);
+}
+
+/* Іконка */
 .icon {
-  font-size: 20px;
-  color: #fff;
+  font-size: 22px;
+  transition: all 0.3s ease;
+}
+
+/* Стани іконки */
+.iconInactive {
+  stroke: var(--white);
+  fill: transparent;
+}
+
+.iconActive {
+  stroke: var(--white);
+  fill: var(--white);
+  stroke-width: 1px;
 }
 
 .label {
   font-family: var(--font-family);
   font-weight: 600;
   font-size: 18px;
-  color: #fff;
+  color: var(--white);
 }
 
+/* Адаптив */
 @media (min-width: 768px) {
   .saveBtn {
     width: 249px;

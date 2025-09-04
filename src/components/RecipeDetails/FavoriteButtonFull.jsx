@@ -1,6 +1,5 @@
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import css from "./FavoriteButtonFull.module.css";
-
 import { useFavorite } from "../../hooks/useFavorite";
 
 const FavoriteButtonFull = ({ recipeId }) => {
@@ -10,11 +9,13 @@ const FavoriteButtonFull = ({ recipeId }) => {
     <button onClick={toggleFavorite} className={css.saveBtn}>
       {isFavorite ? (
         <>
-          Unsave <FaBookmark className={css.icon} />
+          <span className={css.label}>Unsave</span>
+          <FaBookmark className={css.iconActive} />
         </>
       ) : (
         <>
-          Save <FaRegBookmark className={css.icon} />
+          <span className={css.label}>Save</span>
+          <FaRegBookmark className={css.icon} />
         </>
       )}
     </button>
