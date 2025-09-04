@@ -77,11 +77,7 @@ export default function FavoriteRecipes() {
       {hasNextPage && <LoadMoreBtn onClick={() => setPage((prev) => prev + 1)} />}
 
       {recipes.length > 0 && !isLoading && (
-        <Pagination
-          currentPage={page}
-          totalPages={Math.ceil(totalSavedRecipes / RECIPES_PER_PAGE)}
-          onPageChange={setPage}
-        />
+        <LoadMoreBtn/>
       )}
     </>
   );
