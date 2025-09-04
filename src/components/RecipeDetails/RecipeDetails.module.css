@@ -4,6 +4,7 @@
   flex-direction: column;
   justify-content: center;
   padding: 0px;
+  font-family: var(--font-family);
 }
 
 .title {
