@@ -12,7 +12,8 @@
   font-weight: 600;
   line-height: 1.3;
   margin-bottom: 32px;
-  color: black;
+  font-family: var(--font-family);
+  color: var(--black);
 }
 .blockwrapper {
   display: flex;
@@ -53,8 +54,15 @@
 }
 
 .subtitle {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 600;
+  margin-bottom: 16px;
+  font-family: var(--font-family);
+  color: var(--black);
+}
+
+.unsubtitle {
+  font-size: 24px;
   margin-bottom: 15px;
 }
 
@@ -62,6 +70,7 @@
   font-size: 16px;
   line-height: 1.55;
   font-weight: 400;
+  font-family: var(--font-family);
   color: var(--black);
   margin-bottom: 16px;
 }
@@ -85,6 +94,7 @@
 /* 🔹 Tablet */
 @media (min-width: 768px) {
   .title {
+    font-size: 48px;
     margin-top: 0;
     text-align: start;
   }
@@ -127,22 +137,29 @@
 }
 
 @media (min-width: 1440px) {
+  .wrapper {
+    justify-content: center;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+  }
   :root {
     --recipe-bg: #34373a;
   }
+
   .imageWrapper {
     width: 100%;
-    display: flex;
-    justify-content: center;
     background-color: var(--recipe-bg);
     border-radius: 8px;
+    display: flex;
+    justify-content: center;
   }
 
   .image {
-    width: 100%; /* розтягнути по контейнеру */
-    max-width: 1226px; /* як у Figma */
-    height: 624px; /* фіксована висота з макета */
-    object-fit: cover; /* щоб картинка не сплющувалась */
+    width: 100%;
+    max-width: 1226px;
+    height: 624px;
+    object-fit: cover;
     border-radius: 8px;
   }
 
