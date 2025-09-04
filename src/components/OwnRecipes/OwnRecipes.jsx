@@ -64,7 +64,7 @@ export default function OwnRecipes() {
         !isLoading && <NotFound message="You have no recipes yet." />
       )}
 
-      {hasNextPage && <LoadMoreBtn onClick={handleLoadMore} />}
+      {/* {hasNextPage && <LoadMoreBtn onClick={handleLoadMore} />} */}
 
       {ownRecipes.length > 0 && !isLoading && (
         <Pagination
