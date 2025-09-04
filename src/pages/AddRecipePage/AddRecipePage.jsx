@@ -161,9 +161,8 @@ export default function AddRecipePage() {
       const id =
         created?.data?._id || created?.data?.id || created?._id || created?.id;
       console.log('Recipe created successfully ✅');
-      // resetForm();
+      resetForm();
       navigate(id ? `/recipes/${id}` : '/recipes');
-      console
     } catch (e) {
       console.log('Failed to create recipe');
     } finally {
