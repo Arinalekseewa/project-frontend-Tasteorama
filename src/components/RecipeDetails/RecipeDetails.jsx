@@ -27,7 +27,7 @@ export default function RecipeDetails({ recipe }) {
         {/* Загальна інформація */}
         <div className={styles.metaRow}>
           <section className={styles.infoBox}>
-            <h2 className={styles.subtitle}>General informations</h2>
+            <h3 className={styles.unsubtitle}>General informations</h3>
             <div className={styles.infoBoxItem}>
               <p>
                 <b>Category:</b> {recipe.category}
