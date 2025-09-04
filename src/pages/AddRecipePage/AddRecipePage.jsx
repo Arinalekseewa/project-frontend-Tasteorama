@@ -83,7 +83,7 @@ export default function AddRecipePage() {
   const ingredientOptions = useMemo(
     () =>
       ingredients.map(ingredient => ({
-        value: ingredient.name,
+        value: ingredient._id,
         label: ingredient.name,
       })),
     [ingredients]
@@ -96,14 +96,16 @@ export default function AddRecipePage() {
 
     if (
       values.ingredients.some(
-        x => x.name.toLowerCase() === selectedIngredient.label.toLowerCase()
+        // x => x.name.toLowerCase() === selectedIngredient.label.toLowerCase()
+        x => x.id.toLowerCase() === selectedIngredient.label.toLowerCase()
       )
     )
       return;
 
     setFieldValue('ingredients', [
       ...values.ingredients,
-      { name: selectedIngredient.label, amount },
+      // { name: selectedIngredient.label, amount },
+        { id: selectedIngredient.value, amount, name: selectedIngredient.label },
     ]);
     setFieldValue('selectedIngredient', null);
     setFieldValue('selectedAmount', '');
@@ -132,43 +134,54 @@ export default function AddRecipePage() {
     [previewUrl]
   );
 
-  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    try {
-      console.log('Form values:', values);
-      const form = new FormData();
-      form.append('title', values.title.trim());
-      form.append('category', values.category);
-      form.append('area', 'DefaultArea');
-      form.append('instructions', values.instructions.trim());
-      form.append('description', values.description.trim());
-      form.append('time', values.cookingTime);
-      console.log(form);
-      if (values.calories) form.append('cals', values.calories);
+const handleSubmit = async (values, { setSubmitting }) => {
+  try {
+    console.log('Form values:', values);
 
-      const toNumber = v => {
-        const n = parseFloat(String(v).replace(',', '.'));
-        return Number.isFinite(n) ? n : null;
-      };
+    const form = new FormData();
+    form.append('title', values.title?.trim() || '');
+    form.append('category', values.category || '');
+    form.append('area', 'DefaultArea');
+    form.append('instructions', Array.isArray(values.instructions) ? values.instructions.join('\n') : values.instructions || '');
+    form.append('description', values.description?.trim() || '');
+    form.append('time', Number(values.cookingTime) || 0);
+    form.append('cals', Number(values.calories) || 0);
+    form.append('thumb', values.photo || '');
+  
+    // Перетворюємо строки в числа для інгредієнтів
+    const toNumber = v => {
+      const n = parseFloat(String(v).replace(',', '.'));
+      return Number.isFinite(n) ? n : null;
+    };
 
-      const ingredientsPayload = values.ingredients.map(ing => ({
-        ingredient: ing.name,
-        ingredientAmount: toNumber(ing.amount),
-      }));
-      form.append('ingredients', JSON.stringify(ingredientsPayload));
-      if (values.photo) form.append('thumb', values.photo);
-    
-      const created = await dispatch(createRecipe(form)).unwrap();
-      const id =
-        created?.data?._id || created?.data?.id || created?._id || created?.id;
-      console.log('Recipe created successfully ✅');
-      resetForm();
-      navigate(id ? `/recipes/${id}` : '/recipes');
-    } catch (e) {
-      console.log('Failed to create recipe');
-    } finally {
-      setSubmitting(false);
+    // Додаємо кожен інгредієнт окремо
+    values.ingredients.forEach((ing, index) => {
+      // form.append(`ingredients[${index}][ingredient]`, ing.name || '');
+      // form.append(`ingredients[${index}][ingredient]`, ing.id || '');
+      // form.append(`ingredients[${index}][ingredientAmount]`, ing.amount || '');
+      form.append(`ingredients[${index}][id]`, ing.id || '');
+      form.append(`ingredients[${index}][measure]`, ing.amount || '');
+    });
+
+    // Дебаг: виводимо всі пари ключ-значення
+    for (let pair of form.entries()) {
+      console.log(pair[0], pair[1]);
     }
-  };
+
+    const created = await dispatch(createRecipe(form)).unwrap();
+
+    const id =
+      created?.data?._id || created?.data?.id || created?._id || created?.id;
+
+    console.log('Recipe created successfully ✅');
+    navigate(id ? `/recipes/${id}` : '/recipes');
+  } catch (e) {
+    console.log('Failed to create recipe', e);
+  } finally {
+    setSubmitting(false);
+  }
+};
+
 
   const initialCategory = categoryOptions[0]?.value ?? '';
 
@@ -354,7 +367,8 @@ export default function AddRecipePage() {
                         <div className={styles.tableRows}>
                           {values.ingredients.map(ingredient => (
                             <div
-                              key={ingredient.name}
+                              // key={ingredient.name}
+                              key={ingredient._id}
                               className={styles.tableRow}
                             >
                               <div className={styles.cellName}>
