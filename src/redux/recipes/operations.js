@@ -95,7 +95,6 @@ export const createRecipe = createAsyncThunk(
     try {
       const response = await api.post("/recipes/add-recipe", formData);
       return response.data;
-      console.log(response.data);
     } catch (error) {
       return rejectWithValue(error.response?.data || "Create recipe failed");
     }

@@ -24,9 +24,9 @@ import Loader from "../Loader/Loader.jsx";
 //     );
 // };
 export default function RecipeList({ recipes = [] }) {
-  const loading = useSelector(selectRecipesLoading);
+  // const loading = useSelector(selectRecipesLoading);
 
-  if (loading) return <Loader />;
+  // if (loading) return <Loader />;
 
   return (
     <div>
