@@ -1,15 +1,10 @@
-// import { useSelector } from "react-redux";
-// import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import styles from "./RecipeDetails.module.css";
 import IngredientsList from "./IngredientsList";
 import StepsList from "./StepsList";
-import FavoriteButton from "../RecipeCard/FavoriteButton/FavoriteButton.jsx";
+import FavoriteButtonFull from "./FavoriteButtonFull.jsx";
 
 export default function RecipeDetails({ recipe }) {
-  // const isLoggedIn = useSelector(selectIsLoggedIn);
-
-  // if (!recipe) return null;
-  const ingredients = [];
+  if (!recipe) return null;
 
   return (
     <div className={styles.wrapper}>
@@ -19,26 +14,34 @@ export default function RecipeDetails({ recipe }) {
 
         {/* Зображення страви */}
         <div className={styles.imageWrapper}>
-          <img src={recipe.thumb} alt={recipe.title} className={styles.image} />
+          <div className={styles.imageBackground}>
+            <img
+              src={recipe.thumb}
+              alt={recipe.title}
+              className={styles.image}
+            />
+          </div>
         </div>
       </div>
       <div className={styles.desctopinfo}>
         {/* Загальна інформація */}
         <div className={styles.metaRow}>
           <section className={styles.infoBox}>
-            <h2 className={styles.subtitle}>General informations</h2>
-            <p>
-              <b>Category:</b> {recipe.category}
-            </p>
-            <p>
-              <b>Cooking time:</b> {recipe.time}
-            </p>
-            <p>
-              <b>Calories:</b> {recipe.calories}
-            </p>
+            <h3 className={styles.unsubtitle}>General informations</h3>
+            <div className={styles.infoBoxItem}>
+              <p>
+                <b>Category:</b> {recipe.category}
+              </p>
+              <p>
+                <b>Cooking time:</b> {recipe.time}
+              </p>
+              <p>
+                <b>Calories:</b> {recipe.calories}
+              </p>
+            </div>
           </section>
           {/* Save / Unsave */}
-          <FavoriteButton recipeId={recipe._id} /> {/* інтегрована кнопка */}
+          <FavoriteButtonFull recipeId={recipe._id} />
         </div>
 
         {/* Опис */}

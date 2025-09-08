@@ -13,25 +13,22 @@ import {
   selectRecipes,
   selectRecipesError,
   selectRecipesLoading,
-  // selectTotalRecipes,
+  selectTotalRecipes,
 } from "../../redux/recipes/selectors.js";
+import LoadMoreBtn from "../../components/LoadMoreBtn/LoadMoreBtn.jsx";
 import { selectFiltersError } from "../../redux/filters/selectors.js";
 import { fetchCategories, fetchIngredients } from "../../redux/filters/operations.js";
-
 const RECIPES_PER_PAGE = 12;
 
 export default function MainPage() {
   const dispatch = useDispatch();
-
   const recipes = useSelector(selectRecipes);
-  // const totalRecipes = useSelector(selectTotalRecipes);
   const recipesLoading = useSelector(selectRecipesLoading);
   const recipesError = useSelector(selectRecipesError);
   const filtersError = useSelector(selectFiltersError);
-  
+  const totalRecipes = useSelector(selectTotalRecipes);
   const sectionRef = useRef(null);
   const isFirstRender = useRef(true);
-
   const [currentFilters, setCurrentFilters] = useState({
     category: "",
     ingredient: "",
@@ -39,28 +36,24 @@ export default function MainPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(1);
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
-
   const openFiltersModal = () => setIsFiltersModalOpen(true);
   const closeFiltersModal = () => setIsFiltersModalOpen(false);
-
   const handleApplyFilters = ({ category, ingredient }) => {
     setCurrentFilters({ category, ingredient });
     setPage(1);
   };
-
+  console.log(recipes);
   const handleResetAndCloseFilters = () => {
     setCurrentFilters({ category: '', ingredient: '' });
     setSearchQuery('');
     setPage(1);
     closeFiltersModal();
   };
-
   const handleSearch = (query) => {
     setSearchQuery(query);
     setPage(1);
   };
   const loadRecipesRef = useRef();
-
   const loadRecipes = useCallback(() => {
     dispatch(
       fetchRecipes({
@@ -79,27 +72,20 @@ export default function MainPage() {
     page,
     RECIPES_PER_PAGE,
   ]);
-
   // Виклик fetch на зміну фільтрів, сторінки або пошуку
   useEffect(() => {
     loadRecipes();
   }, [loadRecipes]);
-
   // Прокрутка до секції при зміні сторінки або фільтрів
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
       return;
     }
-    if (sectionRef.current) {
-      sectionRef.current.scrollIntoView({ behavior: "smooth" });
-    }
   }, [page, currentFilters.category, currentFilters.ingredient, searchQuery]);
-
   useEffect(() => {
     loadRecipesRef.current = loadRecipes;
   }, [loadRecipes]);
-
   useEffect(() => {
     if (loadRecipesRef.current) {
       loadRecipesRef.current();
@@ -116,7 +102,6 @@ export default function MainPage() {
       );
     }
   }, [recipesError]);
-
   // Toast для помилок завантаження фільтрів
   useEffect(() => {
     if (filtersError) {
@@ -128,12 +113,10 @@ export default function MainPage() {
       );
     }
   }, [filtersError]);
-
   useEffect(() => {
     dispatch(fetchCategories());
     dispatch(fetchIngredients());
   }, [dispatch]);
-
   return (
     <section className={styles.section}>
       <div className={styles.mainPageContainer}>
@@ -146,17 +129,16 @@ export default function MainPage() {
           ) : (
             <h1 className={styles.pageTitle}>Recipes</h1>
           )}
-
           <div className={styles.filtersAndCountWrapper}>
             {!recipesLoading && !recipesError && (
               <>
-                {/* {totalRecipes > 0 ? (
+                {totalRecipes > 0 ? (
                   <p className={styles.recipeCount}>
                     {totalRecipes} {totalRecipes === 1 ? "recipe" : "recipes"}
                   </p>
                 ) : (
                   <p>Sorry, no recipes match your search.</p>
-                )} */}
+                )}
               </>
             )}
             <Filters
@@ -166,7 +148,6 @@ export default function MainPage() {
               openFiltersModal={openFiltersModal}
             />
           </div>
-
           <FiltersModal
             isOpen={isFiltersModalOpen}
             onClose={closeFiltersModal}
@@ -174,22 +155,10 @@ export default function MainPage() {
             currentFilters={currentFilters}
             onResetAndCloseFilters={handleResetAndCloseFilters}
           />
-
-          {recipesLoading && <Loader />}
-
-          {/* {!recipesLoading && !recipesError && recipes.length > 0 && (
-
-            <RecipeList recipes={recipes.recipes} />
-          )} */}
+          {/* {recipesLoading && <Loader />} */}
 
           <RecipeList recipes={recipes} />
-          {recipes.length > 0 && !recipesLoading && (
-            <Pagination
-              currentPage={page}
-              // totalPages={Math.ceil(totalRecipes / RECIPES_PER_PAGE)}
-              onPageChange={setPage}
-            />
-          )}
+          <LoadMoreBtn/>
         </div>
       </div>
     </section>

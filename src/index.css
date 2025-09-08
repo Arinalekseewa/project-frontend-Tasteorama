@@ -4,8 +4,6 @@
   box-sizing: border-box;
 }
 
-
-
 :root {
   /* Кольори */
   --black: #000;
@@ -73,4 +71,42 @@ img {
 
 li {
   list-style: none;
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* styles/Toast.css */
+.Toastify__toast--success {
+  background: var(--light-beige);
+  color: var(--black);
+  font-family: var(--font-family);
+  font-size: 14px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.Toastify__toast--error {
+  background: var(--light-beige);
+  color: var(--red);
+  font-family: var(--font-family);
+  font-size: 14px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.Toastify__toast-body {
+  margin: 0;
 }

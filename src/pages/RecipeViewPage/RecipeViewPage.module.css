@@ -1,5 +1,5 @@
 .page {
-  padding: 16px;
+  padding: 48px 16px;
   max-width: 393px;
   margin: 0 auto;
 }
@@ -7,13 +7,13 @@
 @media (min-width: 768px) {
   .page {
     max-width: 768px;
-    padding: 24px;
+    padding: 48px 32px;
   }
 }
-@media (min-width: 1224px) {
+@media (min-width: 1440px) {
   .page {
-    max-width: 1224px;
-    padding: 32px;
+    min-width: 1225px;
+    padding-top: 48px;
     display: flex;
     gap: 24px;
     align-items: flex-start;

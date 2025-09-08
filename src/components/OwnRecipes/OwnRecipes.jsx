@@ -39,12 +39,6 @@ export default function OwnRecipes() {
     dispatch(fetchOwnRecipes({ page, limit: RECIPES_PER_PAGE }));
   }, [dispatch, page]);
 
-  useEffect(() => {
-    if (sectionRef.current) {
-      sectionRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [page]);
-
   //   const handleLoadMore = () => {
   //     const nextPage = page + 1;
   //     dispatch(fetchOwnRecipes({ page: nextPage, limit: 12 }));
