@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 import { toast } from "react-toastify";
 
 const toastOptions = {
@@ -15,3 +17,4 @@ export const notifySuccess = (message) => {
 export const notifyError = (message) => {
   toast.error(message, { ...toastOptions, toastId: "error-toast" });
 };
+>>>>>>> origin/main

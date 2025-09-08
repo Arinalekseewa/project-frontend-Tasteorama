@@ -21,8 +21,11 @@ const initialState = {
   error: null,
   page: 1,
   limit: 12,
+<<<<<<< HEAD
+=======
   perPage: 12,        // зберігаємо, якщо бекенд повертає пагінацію
   limit: 12,          // локальний ліміт
+>>>>>>> origin/main
   total: 0,
   own: {
     items: [],
@@ -31,6 +34,8 @@ const initialState = {
   },
 };
 
+<<<<<<< HEAD
+=======
 const getErrorMessage = (payload, fallback = "Something went wrong") =>
   typeof payload === "string"
     ? payload
@@ -38,6 +43,7 @@ const getErrorMessage = (payload, fallback = "Something went wrong") =>
 
 const getData = (payload) => payload?.data ?? payload;
 
+>>>>>>> origin/main
 const recipesSlice = createSlice({
   name: "recipes",
   initialState,
@@ -61,6 +67,8 @@ const recipesSlice = createSlice({
       })
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.items = action.payload.data || action.payload;
+<<<<<<< HEAD
+=======
         const data = getData(action.payload);
         // Якщо бекенд повертає об'єкт із { data, page, perPage }:
         if (Array.isArray(data)) {
@@ -71,6 +79,7 @@ const recipesSlice = createSlice({
           state.items = [];
           state.items = action.payload.data || action.payload;
         }
+>>>>>>> origin/main
         if (action.payload.total) {
           state.total = action.payload.total;
         }
@@ -97,7 +106,11 @@ const recipesSlice = createSlice({
       })
       .addCase(fetchRecipeById.fulfilled, (state, action) => {
         state.loading = false;
+<<<<<<< HEAD
+        state.currentRecipe = action.payload.data || action.payload;
+=======
         state.currentRecipe = getData(action.payload) ?? null;
+>>>>>>> origin/main
       })
       .addCase(fetchRecipeById.rejected, (state, action) => {
         state.loading = false;
@@ -133,6 +146,27 @@ const recipesSlice = createSlice({
       })
       .addCase(addFavorite.fulfilled, (state, action) => {
         state.loading = false;
+<<<<<<< HEAD
+        const updatedRecipe = action.payload.data || action.payload;
+
+        // Оновлюємо рецепт у списку
+        const index = state.items.findIndex((r) => r._id === updatedRecipe._id);
+        if (index !== -1) {
+          state.items[index] = updatedRecipe;
+        }
+
+        // Оновлюємо поточний рецепт
+        if (state.currentRecipe?._id === updatedRecipe._id) {
+          state.currentRecipe = updatedRecipe;
+          state.currentRecipe.isFavorite = true;
+        }
+
+        // Оновлюємо список улюблених
+        if (!state.favoriteItems.some((r) => r._id === updatedRecipe._id)) {
+          state.favoriteItems.push(updatedRecipe);
+        }
+
+=======
         const addedRecipe = action.payload.data || action.payload;
 
         // Оновлюємо рецепт у списку
@@ -168,6 +202,7 @@ const recipesSlice = createSlice({
         if (!state.favoriteItems.some((r) => r._id === recipe._id)) {
           state.favoriteItems.push({ ...recipe, isFavorite: true });
         }
+>>>>>>> origin/main
         notifySuccess("Рецепт додано до обраного!");
       })
 
@@ -176,7 +211,6 @@ const recipesSlice = createSlice({
         state.error = getErrorMessage(action.payload);
         notifyError(state.error);
       })
-
       // =======================
       // REMOVE FROM FAVORITES
       // =======================
@@ -216,10 +250,16 @@ const recipesSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchFavoriteRecipes.fulfilled, (state, action) => {
+<<<<<<< HEAD
+        state.loading = false;
+        state.favoriteItems = action.payload.data || action.payload;
+      })
+=======
   state.loading = false;
   const favorites = getData(action.payload);
   state.favoriteItems = Array.isArray(favorites) ? favorites : [];
 })
+>>>>>>> origin/main
       .addCase(fetchFavoriteRecipes.rejected, (state, action) => {
         state.loading = false;
         state.error = getErrorMessage(action.payload);
